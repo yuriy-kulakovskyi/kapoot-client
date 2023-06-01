@@ -38,6 +38,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   gap: 20px;
 }
 
@@ -83,6 +84,10 @@
   }
   .main__text__span {
     font-size: 30px;
+  }
+
+  .main__text .row {
+    flex-direction: row;
   }
 
   .main__text__link {

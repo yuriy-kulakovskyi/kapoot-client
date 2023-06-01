@@ -88,11 +88,9 @@
 .nav__link--language::before {
   content: '';
   position: absolute;
-  left: .5rem;
-  top: 50%;
+  left: .5rem; top: 50%;
   transform: translateY(-50%);
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.2rem; height: 1.2rem;
   background-image: url("./globe.svg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -124,7 +122,7 @@
 }
 
 .nav__dropdown-link:hover {
-  background: #0542B9;
+  background-color: #0542B9;
   color: #fff;
 }
 
@@ -190,5 +188,11 @@
   
   .nav__dropdown-link {
     font-size: .875rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .header .nav__link:not(.nav__link--language) {
+    display: none;
   }
 }
