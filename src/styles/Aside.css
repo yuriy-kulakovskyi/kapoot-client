@@ -52,3 +52,27 @@
 .aside__link span svg {
   width: 28px; height: 28px;
 }
+
+/* Media */
+@media screen and (min-width: 768px) {
+  .aside {
+    min-width: 94px; max-width: 94px;
+    padding: 80px 0;
+  }
+
+  .aside__list {
+    gap: 1rem;
+  }
+
+  .aside__item {
+    min-height: 60px;
+  }
+
+  .aside__link {
+    font-size: .75rem;
+  }
+
+  .aside__link span svg {
+    width: 32px; height: 32px;
+  }
+}
