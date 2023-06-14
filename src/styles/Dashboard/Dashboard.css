@@ -26,3 +26,20 @@
   flex-direction: column;
   border-radius: 4px;
 }
+
+
+/* Media */
+@media screen and (min-width: 768px) {
+  .dashboard {
+    padding: 85px 16px 85px 94px;
+  }
+  .dashboard__container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+  }
+  .container__user,
+  .container__host,
+  .container__quizzes {
+    padding: 20px;
+  }
+}

@@ -79,6 +79,23 @@ const Dashboard = ({ language }) => {
 
       {/* dashboard container */}
       <div className="dashboard__container">
+
+        {/* host a kapoot block */}
+        <div className="container__host">
+          {/* Host */}
+          <Host
+            updateTest={updateTest}
+          />
+        </div>
+
+        {/* display user's quizes */}
+        <div className="container__quizzes">
+          {/* Quizes */}
+          <Quizes 
+            quizzesRef={userRef}
+          />
+        </div>
+
         {/* Display the user's data */}
         <div className="container__user">
           {currentUser 
@@ -97,22 +114,6 @@ const Dashboard = ({ language }) => {
                 {language === "en" ? text.errors[2].en : language === "ua" ? text.errors[2].ua : text.errors[2].pl}
             </h1>
           }
-        </div>
-
-        {/* host a kapoot block */}
-        <div className="container__host">
-          {/* Host */}
-          <Host
-            updateTest={updateTest}
-          />
-        </div>
-
-        {/* display user's quizes */}
-        <div className="container__quizzes">
-          {/* Quizes */}
-          <Quizes 
-            quizzesRef={userRef}
-          />
         </div>
       </div>
     </section>

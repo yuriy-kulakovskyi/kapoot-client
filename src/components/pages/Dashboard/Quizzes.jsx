@@ -19,7 +19,7 @@ const Quizes = ({ quizzesRef, language }) => {
   const [quizzes, setQuizzes] = useState([]);
 
   useEffect(() => {
-    // Get data from database
+    // Get data from the database
     onValue(quizzesRef, (snapshot) => {
       const data = snapshot.val();
 
