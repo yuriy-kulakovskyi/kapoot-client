@@ -1,0 +1,67 @@
+{
+  "texts": [
+    {
+      "errors": [
+        {
+          "en": "Passwords do not match",
+          "ua": "Паролі не співпадають",
+          "pl": "Hasła nie są takie same"
+        },
+
+        {
+          "en": "Failed to create an account",
+          "ua": "Не вдалось створити аккаунт",
+          "pl": "Nie udało się utworzyć konta"
+        }
+      ],
+
+      "inputs": [
+        {
+          "en": "Email...",
+          "ua": "Електронна пошта...",
+          "pl": "Email..."
+        },
+
+        {
+          "en": "Nickname...",
+          "ua": "Нікнейм...",
+          "pl": "Nick..."
+        },
+
+        {
+          "en": "Password...",
+          "ua": "Пароль...",
+          "pl": "Hasło..."
+        },
+
+        {
+          "en": "Confirm password...",
+          "ua": "Підтвердіть пароль...",
+          "pl": "Potwierdź hasło..."
+        }
+      ],
+
+      "buttons": [
+        {
+          "en": "Sign up",
+          "ua": "Зареєструватися",
+          "pl": "Zarejestruj się"
+        }
+      ],
+
+      "links": [
+        {
+          "en": "Already have an account?",
+          "ua": "Вже маєте аккаунт?",
+          "pl": "Masz już konto?"
+        },
+
+        {
+          "en": "Sign in",
+          "ua": "Увійти",
+          "pl": "Zaloguj się"
+        }
+      ]
+    }
+  ]
+}

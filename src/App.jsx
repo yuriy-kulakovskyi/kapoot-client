@@ -4,15 +4,29 @@ import './styles/App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Home component link
-import Home from "./components/Home";
+import Home from "./components/pages/Home/Home";
+
+// Signup component link
+import Signup from "./components/pages/Signup/Signup";
+
+// AuthProvider
+import { AuthProvider } from './contexts/AuthContext';
+
+// Login component link
+import Login from "./components/pages/Login/Login";
 
 function App() {
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

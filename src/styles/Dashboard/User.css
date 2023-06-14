@@ -1,0 +1,40 @@
+/* error styles */
+.card h1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #f44336;
+  margin-bottom: 16px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.card__nickname {
+  color: rgb(70, 23, 143);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.card__name {
+  color: rgb(110, 110, 110);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+/* Log out button like in Kahoot */
+.card__button {
+  border: none; outline: none;
+  background-color: rgb(70, 23, 143);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 4px;
+  transition: all .2s ease-in-out;
+  margin-top: 16px;
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
+  padding: .8rem 4rem;
+}
+
+.card__button:hover {
+  background-color: rgb(70, 23, 143, .8);
+}

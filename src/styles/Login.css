@@ -1,0 +1,27 @@
+.login {
+  height: 100vh; width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+}
+
+.login__container {
+  width: 400px; height: 500px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.need-account {
+  margin-top: 20px;
+  font-size: 14px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}

@@ -1,0 +1,67 @@
+{
+  "errors": [
+    {
+      "en": "Failed to log out",
+      "pl": "Wylogowanie nie powiodło się",
+      "ua": "Не вдалося вийти"
+    },
+
+    {
+      "en": "Failed to update the quiz",
+      "pl": "Aktualizacja quizu nie powiodła się",
+      "ua": "Не вдалося оновити тест"
+    },
+
+    {
+      "en": "Failed to fin the user",
+      "pl": "Nie udało się znaleźć użytkownika",
+      "ua": "Не вдалося знайти користувача"
+    }
+  ],
+
+  "button": {
+    "en": "Log Out",
+    "pl": "Wyloguj",
+    "ua": "Вийти"
+  },
+
+  "titles": [
+    {
+      "en": "Host a kapoot!",
+      "pl": "Zorganizuj kapoota!",
+      "ua": "Зорганізуй капут!"
+    },
+
+    {
+      "en": "My kapoots",
+      "pl": "Moje kapooty",
+      "ua": "Мої капути"
+    }
+  ],
+
+  "description": {
+    "en": "More players - more fun! Invite 2 or more",
+    "pl": "Więcej graczy - więcej zabawy! Zaprosić 2 albo więcej",
+    "ua": "Більше гравців - більше веселощів! Запросити 2 або більше"
+  },
+
+  "links": [
+    {
+      "en": "Play a game",
+      "pl": "Zagraj w grę",
+      "ua": "Зіграти в гру"
+    },
+
+    {
+      "en": "Create a Kapoot",
+      "pl": "Stwórz kapoota",
+      "ua": "Створити капут"
+    },
+
+    {
+      "en": "Host a Kapoot",
+      "pl": "Zorganizuj kapoota!",
+      "ua": "Зорганізуй капут!"
+    }
+  ]
+}

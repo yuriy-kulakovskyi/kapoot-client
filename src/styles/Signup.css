@@ -1,0 +1,85 @@
+.signup {
+  background-color: #f5f5f5;
+  height: 100vh; width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup__container {
+  width: 400px; height: 500px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.container__title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 48px;
+  font-weight: bold;
+  color: #46178F;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.container__error {
+  color: #ff0000;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.container__form {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form__input {
+  width: 100%; height: 40px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 0 10px;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.form__button {
+  width: 100%;
+  background-color: #26890C;
+  color: #fff!important;
+  padding: .5rem 1rem;
+  border-radius: .25rem;
+  font-weight: 700;
+  transition: top .2s, bottom .2s;
+  position: relative;
+  box-shadow: 0 3px 0.125em rgba(0, 0, 0, .25);
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.form__button:hover {
+  top: .125em;
+  box-shadow: none;
+}
+
+.form__button:active {
+  background-color: #3e8e41;
+}
+
+.already-have-account {
+  margin-top: 20px;
+  font-size: 14px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}

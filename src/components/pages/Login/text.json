@@ -1,0 +1,49 @@
+{
+  "texts": [
+    {
+      "errors": [
+        {
+          "en": "Failed to sign in",
+          "ua": "Не вдалось увійти",
+          "pl": "Nie udało się zalogować"
+        }
+      ],
+
+      "inputs": [
+        {
+          "en": "Email...",
+          "ua": "Електронна пошта...",
+          "pl": "Email..."
+        },
+
+        {
+          "en": "Password...",
+          "ua": "Пароль...",
+          "pl": "Hasło..."
+        }
+      ],
+
+      "buttons": [
+        {
+          "en": "Log in",
+          "ua": "Увійти",
+          "pl": "Zaloguj się"
+        }
+      ],
+
+      "links": [
+        {
+          "en": "Need an account?",
+          "ua": "Не маєте аккаунту?",
+          "pl": "Nie masz konta?"
+        },
+
+        {
+          "en": "Sign up",
+          "ua": "Зареєструватися",
+          "pl": "Zarejestruj się"
+        }
+      ]
+    }
+  ]
+}
