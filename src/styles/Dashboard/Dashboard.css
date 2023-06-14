@@ -14,12 +14,12 @@
 .container__host,
 .container__quizzes {
   width: 100%;
-  padding: 16px;
+  padding: 10px;
 }
 
 .box {
   background-color: #fff;
-  padding: 16px;
+  padding: 12px;
   display: flex;
   justify-content: center;
   align-items: flex-start;

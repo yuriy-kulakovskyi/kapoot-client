@@ -35,7 +35,7 @@ const Quizes = ({ quizzesRef }) => {
 
       {/* Display quizzes */}
       <ul className="quizzes__list">
-        {quizzes.map((quiz, index) => {
+        {quizzes.length !== 0 ? quizzes.map((quiz, index) => {
           return (
             <li className='quizzes__quiz' key={index}>
               <div className="quiz__image">
@@ -46,7 +46,9 @@ const Quizes = ({ quizzesRef }) => {
               </div>
             </li>
           );
-        })}
+        })
+        : <p className='no-quizzes'>No quizzes yet</p>
+      }
       </ul>
     </div>
   );
