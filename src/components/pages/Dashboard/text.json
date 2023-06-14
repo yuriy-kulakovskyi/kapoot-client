@@ -16,6 +16,12 @@
       "en": "Failed to find the user",
       "pl": "Nie udało się znaleźć użytkownika",
       "ua": "Не вдалося знайти користувача"
+    },
+
+    {
+      "en": "No quizzes yet",
+      "pl": "Brak quizów",
+      "ua": "Ще немає тестів"
     }
   ],
 

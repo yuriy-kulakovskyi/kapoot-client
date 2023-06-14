@@ -54,7 +54,10 @@ const Quizes = ({ quizzesRef, language }) => {
             </li>
           );
         })
-        : <p className='no-quizzes'>No quizzes yet</p>
+        : <p className='no-quizzes'>
+            {/* according to the chosen language, display text */}
+            {language === "en" ? text.errors[3].en : language === "ua" ? text.errors[3].ua : text.errors[3].pl}
+        </p>
       }
       </ul>
     </div>
