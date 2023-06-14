@@ -9,7 +9,13 @@ import coverImage from "./img/cover-img.png";
 // styles
 import "../../../styles/Dashboard/Quizzes.css";
 
-const Quizes = ({ quizzesRef }) => {
+// text.json
+import text from "./text.json";
+
+// connect
+import { connect } from "react-redux";
+
+const Quizes = ({ quizzesRef, language }) => {
   const [quizzes, setQuizzes] = useState([]);
 
   useEffect(() => {
@@ -30,7 +36,8 @@ const Quizes = ({ quizzesRef }) => {
     <div className='quizzes box'>
       {/* Title */}
       <h1 className="quizzes__title">
-        My kapoots
+        {/* according to the chosen language, display text */}
+        {language === "en" ? text.titles[1].en : language === "ua" ? text.titles[1].ua : text.titles[1].pl}
       </h1>
 
       {/* Display quizzes */}
@@ -54,4 +61,10 @@ const Quizes = ({ quizzesRef }) => {
   );
 }
 
-export default Quizes;
+const mapStateToProps = (state) => {
+  return {
+    language: state.language
+  }
+}
+
+export default connect(mapStateToProps)(Quizes);

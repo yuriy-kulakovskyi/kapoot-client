@@ -6,13 +6,25 @@ import { Link } from 'react-router-dom';
 // styles
 import "../../../styles/Dashboard/Host.css";
 
-const Host = ({ updateTest }) => {
+// text.json
+import text from './text.json';
+
+// connect
+import { connect } from 'react-redux';
+
+const Host = ({ updateTest, language }) => {
   return (
     <div className='host box'>
       {/* Head */}
       <div className="host__head">
-        <h4 className='host__title'>Host a kapoot!</h4>
-        <p className="host__description">More players - more fun! Invite 2 or more</p>
+        <h4 className='host__title'>
+          {/* according to the chosen language, display text */}
+          {language === "en" ? text.titles[0].en : language === "ua" ? text.titles[0].ua : text.titles[0].pl}
+        </h4>
+        <p className="host__description">
+          {/* according to the chosen language, display text */}
+          {language === "en" ? text.description.en : language === "ua" ? text.description.ua : text.description.pl}
+        </p>
       </div>
 
       {/* Links */}
@@ -28,7 +40,7 @@ const Host = ({ updateTest }) => {
           </span>
 
           {/* Text */}
-          Play a game
+          {language === "en" ? text.links[0].en : language === "ua" ? text.links[0].ua : text.links[0].pl}
 
           {/* Arrow */}
           <div className="link__arrow-wrap">
@@ -48,7 +60,7 @@ const Host = ({ updateTest }) => {
           </span>
 
           {/* Text */}
-          Create a Kapoot
+          {language === "en" ? text.links[1].en : language === "ua" ? text.links[1].ua : text.links[1].pl}
 
           {/* Arrow */}
           <div className="link__arrow-wrap">
@@ -67,7 +79,7 @@ const Host = ({ updateTest }) => {
           </span>
 
           {/* Text */}
-          Host a Kapoot
+          {language === "en" ? text.links[2].en : language === "ua" ? text.links[2].ua : text.links[2].pl}
 
           {/* Arrow */}
           <div className="link__arrow-wrap">
@@ -79,4 +91,10 @@ const Host = ({ updateTest }) => {
   );
 }
 
-export default Host;
+const mapStateToProps = (state) => {
+  return {
+    language: state.language,
+  }
+}
+
+export default connect(mapStateToProps)(Host);

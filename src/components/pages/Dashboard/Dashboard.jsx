@@ -20,7 +20,13 @@ import "../../../styles/Dashboard/Dashboard.css";
 import Host from './Host';
 import Quizes from './Quizzes';
 
-const Dashboard = () => {
+// text.json
+import text from './text.json';
+
+// connect
+import { connect } from 'react-redux';
+
+const Dashboard = ({ language }) => {
   // error state
   const [error, setError] = useState('');
 
@@ -45,7 +51,9 @@ const Dashboard = () => {
       await logout();
       navigate('/login');
     } catch {
-      setError("Failed to log out");
+      setError(
+        language === "en" ? text.errors[0].en : language === "ua" ? text.errors[0].ua : text.errors[0].pl
+      );
     }
   }
 
@@ -56,7 +64,9 @@ const Dashboard = () => {
     try {
       await push(userRef, "new quiz");
     } catch {
-      setError("Failed to update the quiz");
+      setError(
+        language === "en" ? text.errors[1].en : language === "ua" ? text.errors[1].ua : text.errors[1].pl
+      );
     }
   };
   
@@ -83,7 +93,9 @@ const Dashboard = () => {
             />
 
             // Display error if user is not found
-            : <h1 className='user__not-found'>Failed to find the user</h1>
+            : <h1 className='user__not-found'>
+                {language === "en" ? text.errors[2].en : language === "ua" ? text.errors[2].ua : text.errors[2].pl}
+            </h1>
           }
         </div>
 
@@ -107,4 +119,10 @@ const Dashboard = () => {
   );
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+  return {
+    language: state.language
+  };
+};
+
+export default connect(mapStateToProps)(Dashboard);

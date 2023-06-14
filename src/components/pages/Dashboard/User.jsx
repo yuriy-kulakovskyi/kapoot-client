@@ -3,7 +3,13 @@ import React from 'react';
 // styles
 import "../../../styles/Dashboard/User.css";
 
-const User = ({ error, currentUser, handleLogout }) => {
+// text.json
+import text from './text.json';
+
+// connect
+import { connect } from 'react-redux';
+
+const User = ({ error, currentUser, handleLogout, language }) => {
   return (
     <div className="found box">
       <div className="card">
@@ -21,10 +27,17 @@ const User = ({ error, currentUser, handleLogout }) => {
         onClick={handleLogout}
         className="card__button"
       >
-        Log Out
+        {/* according to the chosen language, display text */}
+        {language === "en" ? text.button.en : language === "ua" ? text.button.ua : text.button.pl}
       </button>
     </div>
   );
 }
 
-export default User;
+const mapStateToProps = (state) => {
+  return {
+    language: state.language
+  };
+};
+
+export default connect(mapStateToProps)(User);
