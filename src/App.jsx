@@ -15,8 +15,10 @@ import { AuthProvider } from './contexts/AuthContext';
 // Login component link
 import Login from "./components/pages/Login/Login";
 
-function App() {
+// CreateTest component link
+import CreateTest from "./components/pages/CreateTest/CreateTest";
 
+function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
@@ -24,6 +26,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/create-kapoot" element={<CreateTest />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

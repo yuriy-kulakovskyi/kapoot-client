@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 // useAuth
 import { useAuth } from '../../../contexts/AuthContext';
 
-// firebase
-import { getDatabase, ref, push } from "firebase/database";
-
 // useNavigate
 import { useNavigate } from 'react-router-dom';
 import User from './User';
+
+// firebase
+import { getDatabase, ref } from "firebase/database";
 
 // Aside component
 import Aside from '../../Aside';
@@ -18,7 +18,7 @@ import "../../../styles/Dashboard/Dashboard.css";
 
 // Host component
 import Host from './Host';
-import Quizes from './Quizzes';
+import Quizzes from './Quizzes';
 
 // text.json
 import text from './text.json';
@@ -37,8 +37,10 @@ const Dashboard = ({ language }) => {
    } = useAuth();
 
    // database
-   const database = getDatabase();
-   const userRef = ref(database, "quizes/" + currentUser.uid);
+  const database = getDatabase();
+  const userRef = ref(database, "/quizzes/" + currentUser.uid);
+
+  console.log(userRef);
 
   // navigate
   const navigate = useNavigate();
@@ -56,19 +58,6 @@ const Dashboard = ({ language }) => {
       );
     }
   }
-
-  // updateTest function
-  async function updateTest() {
-    setError("");
-
-    try {
-      await push(userRef, "new quiz");
-    } catch {
-      setError(
-        language === "en" ? text.errors[1].en : language === "ua" ? text.errors[1].ua : text.errors[1].pl
-      );
-    }
-  };
   
   return (
     <section className='dashboard'>
@@ -83,15 +72,13 @@ const Dashboard = ({ language }) => {
         {/* host a kapoot block */}
         <div className="container__host">
           {/* Host */}
-          <Host
-            updateTest={updateTest}
-          />
+          <Host />
         </div>
 
         {/* display user's quizes */}
         <div className="container__quizzes">
           {/* Quizes */}
-          <Quizes 
+          <Quizzes 
             quizzesRef={userRef}
           />
         </div>
@@ -105,7 +92,6 @@ const Dashboard = ({ language }) => {
               error={error}
               currentUser={currentUser}
               handleLogout={handleLogout}
-              updateTest={updateTest}
               quizzesRef={userRef}
             />
 

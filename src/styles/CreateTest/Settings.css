@@ -1,0 +1,100 @@
+.settings {
+  width: 100%; min-height: 100vh;
+  padding: 24px 24px 8px;
+}
+
+/* title */
+.settings__title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* wrapper */
+.settings__wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 4rem;
+  padding: 2rem 0;
+}
+
+.settings__wrapper .input {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  width: 60%;
+}
+
+.input label {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.input input {
+  width: 100%; min-height: 2.75rem;
+  border-radius: .25rem;
+  border: 1px solid rgb(178, 178, 178)!important;
+  border: none;
+  padding: 4px;
+  font-size: 1rem;
+  letter-spacing: .2px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.input textarea {
+  width: 100%; min-height: 9rem;
+  border-radius: .25rem;
+  border: 1px solid rgb(178, 178, 178)!important;
+  border: none;
+  padding: 4px;
+  font-size: 1rem;
+  letter-spacing: .2px;
+  font-family: "Montserrat", sans-serif;
+  resize: none;
+}
+
+/* footer */
+.settings__footer {
+  position: fixed;
+  bottom: 0; left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 16px;
+}
+
+.settings__button {
+  position: relative;
+  border-radius: .25rem;
+  border: none;
+  padding: 12px 22px;
+  font-size: 1rem;
+  letter-spacing: .2px;
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
+  box-shadow: 0 3px 0.125em rgba(0, 0, 0, .25);
+  font-weight: 800;
+}
+
+/* hover */
+.settings__button:hover {
+  top: .125rem;
+  box-shadow: none;
+}
+
+/* cancel */
+.settings__cancel {
+  background-color: rgb(242, 242, 242);
+  color: rgb(0, 0, 0);
+}
+
+/* done */
+.settings__done {
+  background-color: rgb(38, 137, 12);
+  color: #fff;
+}

@@ -48,7 +48,7 @@
   color: #46178F;
 }
 
-.nav__list .nav__item .nav__link:hover:not(.nav__link--background) .link__text::after {
+.nav__list .nav__item .nav__link:hover:not(.nav__link--background, .nav__link--settings, .nav__link--save) .link__text::after {
   width: 100%;
 }
 
@@ -96,6 +96,40 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.nav__link--settings,
+.nav__link--save {
+  background-color: rgb(19, 104, 206);
+  padding: .5rem 1rem;
+  color: #fff!important;
+  font-weight: 700;
+  border-radius: 4px;
+  font-family: "Montserrat", sans-serif;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 3px 0.125em rgba(0, 0, 0, .25);
+  height: 40px;
+}
+
+.nav__link--save {
+  background-color: rgb(2, 130, 130);
+}
+
+.nav__link--save.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.nav__link--settings:hover,
+.nav__link--save:hover {
+  top: .125rem;
+  box-shadow: none;
+}
+
+.nav__link--save.disabled {
+  top: 0;
+  box-shadow: 0 3px 0.125em rgba(0, 0, 0, .25);
 }
 
 .nav__dropdown {
@@ -203,7 +237,7 @@
 }
 
 @media screen and (max-width: 500px) {
-  .header .nav__link:not(.nav__link--language, .nav__settings a) {
+  .header .nav__link:not(.nav__link--language, .nav__settings a, .nav__link--settings, .nav__link--save) {
     display: none;
   }
 }

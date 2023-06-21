@@ -1,7 +1,7 @@
 import React from 'react';
 
 // styles
-import '..//styles/Header.css';
+import '../styles/Header.css';
 
 // Link component from React Router
 import { Link } from 'react-router-dom';
@@ -12,6 +12,9 @@ import { changeLanguage, toggleMenu } from '../actions';
 // Redux connect function import
 import { connect } from "react-redux";
 
+// firebase
+import { getDatabase, ref, push } from "firebase/database";
+
 // useAuth
 import { useAuth } from '../contexts/AuthContext';
 
@@ -20,6 +23,12 @@ import ChangeLanguage from './ChangeLanguage';
 
 // SettingsButton component import
 import SettingsButton from './SettingsButton';
+
+// setting svg icon
+import SettingsIcon from "../assets/svg/settings.svg";
+
+// useNavigate
+import { useNavigate } from 'react-router-dom';
 
 // navButtons array
 const navButtons = [
@@ -59,16 +68,44 @@ const languages = [
   {
     title: 'POLSKI',
   }
-]
+];
 
-const Header = ({ language, opened, changeLanguage, toggleMenu, isDisplayed }) => {
+const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTest, setOpenSettings, title, description, questions }) => {
   // useAuth
   const { currentUser } = useAuth();
+
+  // navigate
+  const navigate = useNavigate();
+
+  // database
+  const database = getDatabase();
+  const quizRef = ref(database, "quizzes/" + currentUser.uid);
   
   // change language button onclick function
   const changeLanguageButton = (lang) => {
     changeLanguage(lang.title === "ENGLISH" ? "en" : lang.title === "УКРАЇНСЬКА" ? "ua" : "pl")
     toggleMenu();
+  }
+
+  // save test to database function
+  const save = async () => {
+    // push question to database
+    try {
+      await push(quizRef, 
+        {
+          value: {
+            title: title,
+            description: description,
+            questions: questions
+          }
+        }
+      );
+
+      // navigate to dashboard
+      navigate('/');
+    } catch {
+      console.log("Failed to update test");
+    }
   }
 
   return (
@@ -97,16 +134,44 @@ const Header = ({ language, opened, changeLanguage, toggleMenu, isDisplayed }) =
           ))}
 
           {/* Change user's settings button */}
-          {currentUser && (
+          {!creatingTest && currentUser && (
             <SettingsButton />
           )}
 
           {/* Change language button */}
-          <ChangeLanguage
-            languages={languages}
-            changeLanguageButton={changeLanguageButton}
-            toggleMenu={toggleMenu}
-          />
+          {!creatingTest && (
+              <ChangeLanguage
+                languages={languages}
+                changeLanguageButton={changeLanguageButton}
+                toggleMenu={toggleMenu}
+              />  
+            )
+          }
+
+          {/* settings button */}
+          {creatingTest && (
+            <li className="nav__item">
+              <button className="nav__link nav__link--settings" onClick={() => setOpenSettings(true)}>
+                <span className="link__text">
+                  <img src={SettingsIcon} alt="settings icon" />
+                </span>
+              </button>
+            </li>
+          )}
+
+          {/* save quiz button */}
+          {creatingTest && (
+            <li className="nav__item">
+              <button 
+                className={`nav__link nav__link--save ${title !== "" && description !== "" ? '' : 'disabled'}`} 
+                onClick={save}
+              >
+                <span className="link__text">
+                  {language === 'en' ? 'Save' : language === 'ua' ? 'Зберегти' : 'Zapisz'}
+                </span>
+              </button>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

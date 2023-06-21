@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 // user.svg
-import user from '../assets/img/user.svg';
+import user from '../assets/svg/user.svg';
 
 const SettingsButton = () => {
   return (

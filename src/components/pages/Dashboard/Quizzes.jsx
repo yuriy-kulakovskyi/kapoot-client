@@ -16,7 +16,14 @@ import text from "./text.json";
 import { connect } from "react-redux";
 
 const Quizes = ({ quizzesRef, language }) => {
-  const [quizzes, setQuizzes] = useState([]);
+  // names state
+  const [names, setNames] = useState([]);
+
+  // descriptions state
+  // const [descriptions, setDescriptions] = useState([]);
+
+  // questions state
+  // const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
     // Get data from the database
@@ -25,9 +32,33 @@ const Quizes = ({ quizzesRef, language }) => {
 
       if (data) {
         const quizData = Object.values(data);
-        setQuizzes(quizData);
+
+        const quizNames = quizData.map((quiz) => {
+          return quiz.value.title;
+        });
+
+        // const quizDescriptions = quizData.map((quiz) => {
+        //   return quiz.value.description;
+        // });
+        
+        // const quizQuestions = quizData.map((quiz) => {
+        //   return quiz.value.questions;
+        // });
+
+
+        // push quizNames to names
+        setNames(quizNames);
+
+        // push quizDescriptions to descriptions
+        // setDescriptions(quizDescriptions);
+
+        // push quizQuestions to questions
+        // setQuestions(quizQuestions);
+
       } else {
-        setQuizzes([]);
+        setNames([]);
+        // setDescriptions([]);
+        // setQuestions([]);
       }
     });
   }, [quizzesRef]);
@@ -42,7 +73,7 @@ const Quizes = ({ quizzesRef, language }) => {
 
       {/* Display quizzes */}
       <ul className="quizzes__list">
-        {quizzes.length !== 0 ? quizzes.map((quiz, index) => {
+        {names.length !== 0 ? names.map((quiz, index) => {
           return (
             <li className='quizzes__quiz' key={index}>
               <div className="quiz__image">

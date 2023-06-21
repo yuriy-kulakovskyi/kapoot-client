@@ -12,7 +12,7 @@ import text from './text.json';
 // connect
 import { connect } from 'react-redux';
 
-const Host = ({ updateTest, language }) => {
+const Host = ({ language }) => {
   return (
     <div className='host box'>
       {/* Head */}
@@ -52,7 +52,6 @@ const Host = ({ updateTest, language }) => {
         <Link
           to="/create-kapoot"
           className='host__link'
-          onClick={updateTest}
         >
           {/* icon */}
           <span className="link__icon">
