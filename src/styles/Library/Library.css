@@ -54,7 +54,7 @@
   }
 }
 
-@media screen and (max-width: 454px) {
+@media screen and (max-width: 494px) {
   .quiz__title,
   .quiz__host-button {
     font-size: 10px;
