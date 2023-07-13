@@ -12,6 +12,9 @@ import "../../../styles/Dashboard/Quizzes.css";
 // firebase
 import { getDatabase, ref } from "firebase/database";
 
+// push from firebase
+import { push } from "firebase/database";
+
 // text.json
 import text from "./text.json";
 
@@ -21,11 +24,17 @@ import { connect } from "react-redux";
 // useAuth
 import { useAuth } from '../../../contexts/AuthContext';
 
+// Link react router
+import { Link } from "react-router-dom";
+
 const Quizes = ({ language }) => {
   // values from useAuth
   const {
     currentUser
   } = useAuth();
+
+  // questions state
+  const [questions, setQuestions] = useState([]);
 
   // database
   const database = getDatabase();
@@ -33,9 +42,22 @@ const Quizes = ({ language }) => {
   // quizzesRef
   const quizzesRef = useRef();
 
+  // gamesRef
+  const gamesRef = useRef();
+
+  // generate random code but if it's already in the database generate another one and don't allow code less than 15 digits
+  let code = Math.floor(Math.random() * 1000000000000000);
+
+  // questions array
+  let qns = [];
+
+  // quizzesNames array
+  let quizzesNames = [];
+
   useEffect(() => {
     if (currentUser) {
       quizzesRef.current = ref(database, "/quizzes/" + currentUser.uid);
+      gamesRef.current = ref(database, "/games");
     }
   }, [currentUser, database, quizzesRef]);
 
@@ -50,7 +72,6 @@ const Quizes = ({ language }) => {
       if (data) {
         const quizData = Object.values(data);
 
-        // get quiz names
         const quizNames = quizData.map((quiz) => {
           return quiz.value.title;
         });
@@ -58,11 +79,84 @@ const Quizes = ({ language }) => {
         // push quizNames to names
         setNames(quizNames);
 
+        // get questions from quizData
+        const quizQuestions = quizData.map((quiz) => {
+          return quiz.value.questions;
+        });
+
+        // push quizQuestions to questions
+        setQuestions(quizQuestions);
+
       } else {
         setNames([]);
       }
     });
-  }, [quizzesRef]);
+  }, [setNames]);
+
+  // save test to database function
+  const handleClick = async (name) => {
+
+    // find the index of the clicked quiz
+    const index = names.findIndex((quiz) => {
+      return quiz === name;
+    });
+
+    // get data from the database
+    onValue(gamesRef.current, (snapshot) => {
+      const data = snapshot.val();
+
+      if (data) {
+        const gameData = Object.values(data);
+
+        // get codes from gameData
+        const gameCodes = gameData.map((game) => {
+          return game.value.code;
+        });
+
+        // get names from gameData
+        quizzesNames = gameData.map((game) => {
+          return game.value.quiz.title;
+        });
+
+        // get questions from gameData
+        qns = gameData.map((game) => {
+          return game.value.quiz.questions;
+        });
+
+        // check if code is equal to any code in gameCodes
+        const checkCode = gameCodes.find((gameCode) => {
+          return gameCode === code;
+        });
+
+        // if checkCode is true generate another code
+        if (checkCode) {
+          code = Math.floor(Math.random() * 1000000000000000);
+        }
+
+        // if code is less than 15 digits generate another code
+        if (code < 100000000000000) {
+          code = Math.floor(Math.random() * 1000000000000000);
+        }
+      }
+    });
+
+    // push question to database if it doesn't exist in gamesRef
+    try {
+      await push(gamesRef.current,
+        {
+          value: {
+            code: code,
+            quiz: {
+              title: names[index],
+              questions: questions[index]
+            }
+          }
+        }
+      );
+    } catch {
+      console.log("Failed to update test");
+    }
+  }
 
   return (
     <div className='quizzes box'>
@@ -82,15 +176,25 @@ const Quizes = ({ language }) => {
               </div>
               <div className="quiz__info">
                 <h1 className='quiz__title'>{quiz}</h1>
+
+                <Link
+                  to={"/host"}
+                  state={{ title: quiz, code: code }}
+                  className='quiz__host-button'
+                  onClick={() => handleClick(quiz)}
+                >
+                  {/* according to the chosen language display text */}
+                  {language === "en" ? "Play" : language === "ua" ? "Грати" : "Graj"}
+                </Link>
               </div>
             </li>
           );
         })
-        : <p className='no-quizzes'>
+          : <p className='no-quizzes'>
             {/* according to the chosen language, display text */}
-            {language === "en" ? text.errors[3].en : language === "ua" ? text.errors[3].ua : text.errors[3].pl}
-        </p>
-      }
+            {language === "en" ? "No quizzes yet" : language === "ua" ? "Ще немає квізів" : "Brak quizów"}
+          </p>
+        }
       </ul>
     </div>
   );
