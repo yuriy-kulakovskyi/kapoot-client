@@ -1,0 +1,55 @@
+.library {
+  width: 100%; min-height: 100vh;
+}
+
+.library__main {
+  width: 100%; min-height: 100vh;
+  padding: 85px 16px 85px 94px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.library__search {
+  padding-left: .5rem;
+  width: 100%; min-height: 2.75rem;
+  font-family: Montserrat, "Noto Sans Arabic", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border: 1px solid rgb(178, 178, 178);
+  border-radius: 0.25rem;
+  background-color: rgb(255, 255, 255);
+  color: rgb(51, 51, 51);
+  font-size: 1rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.2px;
+  transition: all 0.2s ease 0s;
+  appearance: none;
+  text-overflow: ellipsis;
+  resize: none;
+  overflow: auto;
+  padding: 0px 5rem 0px 1rem;
+  white-space: nowrap;
+  margin-bottom: 2rem;
+  max-width: 700px;
+}
+
+.library__search:focus {
+  outline: none;
+  border: 1px solid rgb(0, 0, 0);
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 0px 1px;
+}
+
+.library-test__list {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+}
+
+@media screen and (min-width: 768px) {
+  .library__main {
+    padding: 85px 16px 85px 104px;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 // onValue
 import { onValue } from "firebase/database";
@@ -9,56 +9,57 @@ import coverImage from "./img/cover-img.png";
 // styles
 import "../../../styles/Dashboard/Quizzes.css";
 
+// firebase
+import { getDatabase, ref } from "firebase/database";
+
 // text.json
 import text from "./text.json";
 
 // connect
 import { connect } from "react-redux";
 
-const Quizes = ({ quizzesRef, language }) => {
+// useAuth
+import { useAuth } from '../../../contexts/AuthContext';
+
+const Quizes = ({ language }) => {
+  // values from useAuth
+  const {
+    currentUser
+  } = useAuth();
+
+  // database
+  const database = getDatabase();
+
+  // quizzesRef
+  const quizzesRef = useRef();
+
+  useEffect(() => {
+    if (currentUser) {
+      quizzesRef.current = ref(database, "/quizzes/" + currentUser.uid);
+    }
+  }, [currentUser, database, quizzesRef]);
+
   // names state
   const [names, setNames] = useState([]);
 
-  // descriptions state
-  // const [descriptions, setDescriptions] = useState([]);
-
-  // questions state
-  // const [questions, setQuestions] = useState([]);
-
   useEffect(() => {
     // Get data from the database
-    onValue(quizzesRef, (snapshot) => {
+    onValue(quizzesRef.current, (snapshot) => {
       const data = snapshot.val();
 
       if (data) {
         const quizData = Object.values(data);
 
+        // get quiz names
         const quizNames = quizData.map((quiz) => {
           return quiz.value.title;
         });
 
-        // const quizDescriptions = quizData.map((quiz) => {
-        //   return quiz.value.description;
-        // });
-        
-        // const quizQuestions = quizData.map((quiz) => {
-        //   return quiz.value.questions;
-        // });
-
-
         // push quizNames to names
         setNames(quizNames);
 
-        // push quizDescriptions to descriptions
-        // setDescriptions(quizDescriptions);
-
-        // push quizQuestions to questions
-        // setQuestions(quizQuestions);
-
       } else {
         setNames([]);
-        // setDescriptions([]);
-        // setQuestions([]);
       }
     });
   }, [quizzesRef]);

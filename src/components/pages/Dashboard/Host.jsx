@@ -31,7 +31,7 @@ const Host = ({ language }) => {
       <div className="host__links">
         {/* Play a game link */}
         <Link
-          to='/play-a-game'
+          to='/play-kapoot'
           className="host__link"
         >
           {/* icon */}

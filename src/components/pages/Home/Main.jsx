@@ -69,7 +69,7 @@ const Main = ({ language }) => {
             {language === "en" ? "or" : language === "ua" ? "або" : "albo"}
           </span>
 
-          <Link to={"/play"} className="main__text__link violet-link">
+          <Link to={currentUser ? "/play-kapoot" : "/signup"} className="main__text__link violet-link">
             {/* According to the "language" constant display button's text on this language */}
             {language === "en" ? buttons.en.play : language === "ua" ? buttons.ua.play : buttons.pl.play}
           </Link>

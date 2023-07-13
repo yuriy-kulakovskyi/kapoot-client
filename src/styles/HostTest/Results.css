@@ -1,0 +1,52 @@
+/* kahoot waiting room styles */
+.results {
+  width: 100%; min-height: 100vh;
+  background-color: rgb(56, 18, 114);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.results__wrap {
+  width: 400px;
+  background-color: rgb(255, 255, 255);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1;
+}
+
+/* title */
+.results__quiz-title {
+  color: rgb(51, 51, 51);
+  font-size: 40px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* independent square and circle styles */
+.results__square {
+  position: fixed;
+  top: -15vmin; left: -15vmin;
+  background-color: rgb(0, 0, 0);
+  transform: rotate(45deg);
+  min-width: 75vmin; min-height: 75vmin;
+  opacity: .1;
+  z-index: 0;
+}
+
+.results__circle {
+  position: fixed;
+  border-radius: 50%;
+  background-color: rgb(0, 0, 0);
+  opacity: .1;
+  min-width: 75vmin; min-height: 75vmin;
+  bottom: -15vmin; right: -15vmin;
+  z-index: 0;
+}

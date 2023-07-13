@@ -5,6 +5,8 @@ import { useAuth } from '../../../contexts/AuthContext';
 
 // useNavigate
 import { useNavigate } from 'react-router-dom';
+
+// User component
 import User from './User';
 
 // firebase
@@ -18,6 +20,8 @@ import "../../../styles/Dashboard/Dashboard.css";
 
 // Host component
 import Host from './Host';
+
+// Quizzes component
 import Quizzes from './Quizzes';
 
 // text.json
@@ -39,8 +43,6 @@ const Dashboard = ({ language }) => {
    // database
   const database = getDatabase();
   const userRef = ref(database, "/quizzes/" + currentUser.uid);
-
-  console.log(userRef);
 
   // navigate
   const navigate = useNavigate();
@@ -78,9 +80,7 @@ const Dashboard = ({ language }) => {
         {/* display user's quizes */}
         <div className="container__quizzes">
           {/* Quizes */}
-          <Quizzes 
-            quizzesRef={userRef}
-          />
+          <Quizzes />
         </div>
 
         {/* Display the user's data */}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
 // styles
 import '../styles/Header.css';
@@ -33,13 +33,6 @@ import { useNavigate } from 'react-router-dom';
 // navButtons array
 const navButtons = [
   {
-    en: 'Play',
-    ua: 'Грати',
-    pl: "Grać",
-    path: '/play'
-  },
-
-  {
     en: 'Sign up',
     ua: 'Зареєструватися',
     pl: "Zarejestrować się",
@@ -70,7 +63,7 @@ const languages = [
   }
 ];
 
-const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTest, setOpenSettings, title, description, questions }) => {
+const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTest, setOpenSettings, title, description, questions, playing }) => {
   // useAuth
   const { currentUser } = useAuth();
 
@@ -79,7 +72,15 @@ const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTes
 
   // database
   const database = getDatabase();
-  const quizRef = ref(database, "quizzes/" + currentUser.uid);
+
+  // quizzesRef
+  const quizzesRef = useRef();
+
+  useEffect(() => {
+    if (currentUser) {
+      quizzesRef.current = ref(database, "/quizzes/" + currentUser.uid);
+    }
+  }, [currentUser, database, quizzesRef]);
   
   // change language button onclick function
   const changeLanguageButton = (lang) => {
@@ -90,21 +91,23 @@ const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTes
   // save test to database function
   const save = async () => {
     // push question to database
-    try {
-      await push(quizRef, 
-        {
+    if (quizzesRef) {
+      try {
+        await push(quizzesRef.current, {
           value: {
             title: title,
             description: description,
             questions: questions
           }
-        }
-      );
+        });
 
-      // navigate to dashboard
-      navigate('/');
-    } catch {
-      console.log("Failed to update test");
+        // navigate to /
+        navigate('/');
+      }
+
+      catch (error) {
+        console.log(error);
+      }
     }
   }
 
@@ -134,7 +137,7 @@ const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTes
           ))}
 
           {/* Change user's settings button */}
-          {!creatingTest && currentUser && (
+          {!creatingTest && !playing && currentUser && (
             <SettingsButton />
           )}
 
@@ -149,7 +152,7 @@ const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTes
           }
 
           {/* settings button */}
-          {creatingTest && (
+          {creatingTest && currentUser && (
             <li className="nav__item">
               <button className="nav__link nav__link--settings" onClick={() => setOpenSettings(true)}>
                 <span className="link__text">
@@ -160,7 +163,7 @@ const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTes
           )}
 
           {/* save quiz button */}
-          {creatingTest && (
+          {creatingTest && currentUser && (
             <li className="nav__item">
               <button 
                 className={`nav__link nav__link--save ${title !== "" && description !== "" ? '' : 'disabled'}`} 

@@ -1,0 +1,112 @@
+/* Montserrat */
+@import url("https://fonts.googleapis.com/css?family=Montserrat:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic");
+
+/* Noto Sans Arabic */
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+Arabic:100,300,regular,500,600,700,900,100italic,300italic,italic,500italic,600italic,700italic,900italic");
+
+/* Helvetica Neue */
+@import url("https://fonts.googleapis.com/css?family=Helvetica+Neue:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic");
+
+.play {
+  width: 100%; min-height: 100vh;
+  background-color: rgb(56, 18, 114);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.play__title {
+  color: #fff;
+  font-size: 40px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  text-align: center;
+}
+
+.play__box {
+  width: 400px;
+  background-color: rgb(255, 255, 255);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1;
+}
+
+.play__box input {
+  width: 100%;
+  min-height: 3.375rem; max-height: 48px;
+  padding: .25rem .375rem;
+  text-align: center;
+  font-size: 1rem;
+  color: rgb(51, 51, 51);
+  outline: none;
+  border-radius: 4px;
+  border: 0.125rem solid rgb(204, 204, 204);
+  font-weight: 700;
+  font-family: Montserrat, "Noto Sans Arabic", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+
+.play__box input:focus {
+  border: 0.125rem solid rgb(51, 51, 51);
+}
+
+/* placeholder styles */
+.play__box input::-webkit-input-placeholder {
+  color: rgb(181, 176, 176);
+}
+
+.play__button {
+  width: 100%;
+  min-height: 3.375rem; max-height: 48px;
+  padding: .25rem .375rem;
+  text-align: center;
+  font-size: 1rem;
+  color: #fff;
+  outline: none;
+  border-radius: 4px;
+  border: none;
+  font-weight: 700;
+  font-family: Montserrat, "Noto Sans Arabic", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: rgb(51, 51, 51);
+  cursor: pointer;
+  transition: top .2s, bottom .2s;
+  position: relative;
+  box-shadow: 0 3px 0.125em rgba(0, 0, 0, .25);
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* hover */
+.play__button:hover {
+  top: .125rem;
+  box-shadow: none;
+}
+
+/* independent square and circle styles */
+.play__square {
+  position: fixed;
+  top: -15vmin; left: -15vmin;
+  background-color: rgb(0, 0, 0);
+  transform: rotate(45deg);
+  min-width: 75vmin; min-height: 75vmin;
+  opacity: .1;
+  z-index: 0;
+}
+
+.play__circle {
+  position: fixed;
+  border-radius: 50%;
+  background-color: rgb(0, 0, 0);
+  opacity: .1;
+  min-width: 75vmin; min-height: 75vmin;
+  bottom: -15vmin; right: -15vmin;
+  z-index: 0;
+}
