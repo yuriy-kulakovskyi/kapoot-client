@@ -39,6 +39,9 @@ import UserResults from './components/pages/Play/UserResults';
 // Library component link
 import Library from './components/pages/Library/Library';
 
+// Settings component link
+import Settings from './components/pages/Settings/Settings';
+
 function App() {
   return (
     <AuthProvider>
@@ -65,6 +68,7 @@ function App() {
           <Route path="/host" element={<Results />} />
           <Route path="/game" element={<Game />} />
           <Route path="/results" element={<UserResults />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
