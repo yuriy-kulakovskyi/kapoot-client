@@ -53,3 +53,18 @@
     padding: 85px 16px 85px 104px;
   }
 }
+
+@media screen and (max-width: 454px) {
+  .quiz__title,
+  .quiz__host-button {
+    font-size: 10px;
+  }
+
+  .quiz__info {
+    width: 90%;
+  }
+
+  .quiz__host-button {
+    padding: .2rem .5rem;
+  }
+}
