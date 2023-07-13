@@ -157,7 +157,10 @@ const LibMain = ({ language }) => {
       <input
         type="text"
         className='library__search'
-        placeholder='Search'
+        placeholder = {
+          // according to the chosen language display text
+          language === "en" ? "Search" : language === "ua" ? "Пошук" : "Znajdź"
+        }
         value={quizName}
         onChange={(e) => setQuizName(e.target.value)}
       />
