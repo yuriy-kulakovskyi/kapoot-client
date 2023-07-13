@@ -89,11 +89,13 @@ const Game = () => {
   const answerQuestion = (question, answer) => {
     // check if currentQuestion is less than questions length
     if (currentQuestion <= questions.length) {
-      // check if answer is equal to correct answer
-      if (question.answers[question.correctAnswers] === answer) {
-        // increment score
-        setScore(score + 1000);
-      }
+      // check if answer is equal to one of the elements in question.correctAnswers
+      question.correctAnswers.forEach((correctAnswer) => {
+        if (answer === question.answers[correctAnswer]) {
+          // increment score
+          setScore(score + 1000);
+        }
+      });
 
       // increment currentQuestion
       setCurrentQuestion(currentQuestion + 1);
