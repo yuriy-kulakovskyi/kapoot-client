@@ -63,7 +63,7 @@ const languages = [
   }
 ];
 
-const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTest, setOpenSettings, title, description, questions, playing }) => {
+const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTest, setOpenSettings, title, description, questions, playing, settings }) => {
   // useAuth
   const { currentUser } = useAuth();
 
@@ -137,7 +137,7 @@ const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTes
           ))}
 
           {/* Change user's settings button */}
-          {!creatingTest && !playing && currentUser && (
+          {!settings && !creatingTest && !playing && currentUser && (
             <SettingsButton />
           )}
 
