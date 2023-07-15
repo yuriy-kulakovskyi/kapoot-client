@@ -48,9 +48,7 @@
   font-weight: bold;
   text-align: center;
   text-decoration: none;
-  min-width: 32px;
-  min-height: 32px;
-  padding: 0px 16px 4px;
+  padding: 8px 16px;
   position: relative;
   font-family: Montserrat, "Noto Sans Arabic", "Helvetica Neue", Helvetica, Arial, sans-serif;
   cursor: pointer;
@@ -138,5 +136,11 @@
 
   .userInfo-row__title {
     font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 403px) {
+  .userInfo-row__save-btn {
+    font-size: .5rem;
   }
 }
