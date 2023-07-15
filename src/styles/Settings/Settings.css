@@ -42,6 +42,7 @@
 .userInfo-row__save-btn {
   box-shadow: rgba(0, 0, 0, 0.25) 0px -2px inset;
   background-color: rgb(38, 137, 12);
+  border: none;
   color: rgb(255, 255, 255);
   border-radius: 4px;
   font-size: .875rem;
@@ -121,6 +122,12 @@
   overflow: auto;
   padding: 0 1rem;
   white-space: nowrap;
+}
+
+.settings__input input[name="username"],
+.settings__input input[name="email"] {
+  cursor: not-allowed;
+  user-select: none;
 }
 
 /* Media */

@@ -26,7 +26,7 @@ const Settings = ({ language }) => {
   const { currentUser, updateprofile } = useAuth();
 
   // username state
-  const [username, setUsername] = useState(
+  const [username] = useState(
     // if user is logged in display his email until @
     currentUser.email.split("@")[0]
     || "");
@@ -39,7 +39,7 @@ const Settings = ({ language }) => {
   );
 
   // email state
-  const [email, setEmail] = useState(
+  const [email] = useState(
     // if user is logged in display his email
     currentUser.email
     || ""
@@ -56,7 +56,7 @@ const Settings = ({ language }) => {
   // change user info
   const changeUserInfo = async () => {
     // update profile
-    await updateprofile(auth.currentUser, { username: username, displayName: nickname, email: email });
+    await updateprofile(auth.currentUser, { displayName: nickname, email: email });
 
     // reload page
     window.location.reload();
@@ -104,11 +104,9 @@ const Settings = ({ language }) => {
         {/* settings */}
         <SettingsBlock
           username={username}
-          setUsername={setUsername}
           nickname={nickname}
           setNickname={setNickname}
           email={email}
-          setEmail={setEmail}
           language={language}
         />
       </div>

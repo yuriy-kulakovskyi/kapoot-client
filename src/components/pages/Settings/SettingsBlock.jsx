@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SettingsBlock = ({ username, setUsername, nickname, setNickname, email, setEmail, language }) => {
+const SettingsBlock = ({ username, nickname, setNickname, email, language }) => {
   return (
     <div className='settings__inputs'>
       {/* username */}
@@ -13,7 +13,7 @@ const SettingsBlock = ({ username, setUsername, nickname, setNickname, email, se
           type='text'
           name='username'
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          readOnly
         />
       </div>
 
@@ -26,8 +26,8 @@ const SettingsBlock = ({ username, setUsername, nickname, setNickname, email, se
         <input
           type='text'
           name='nickname'
-          value={nickname}
           onChange={(e) => setNickname(e.target.value)}
+          value={nickname}
         />
       </div>
 
@@ -41,7 +41,7 @@ const SettingsBlock = ({ username, setUsername, nickname, setNickname, email, se
           type='email'
           name='email'
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          readOnly
         />
       </div>
     </div>
