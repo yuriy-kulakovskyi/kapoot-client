@@ -98,3 +98,11 @@
   background-color: rgb(38, 137, 12);
   color: #fff;
 }
+
+
+/* Media */
+@media screen and (min-width: 768px) {
+  .settings__wrapper {
+    align-items: center;
+  }
+}
