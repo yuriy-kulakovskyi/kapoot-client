@@ -21,6 +21,9 @@ import Footer from './Footer';
 // QuestionsCount component
 import QuestionsCount from './QuestionsCount';
 
+// useNavigate from react-router-dom
+import { useNavigate } from 'react-router-dom';
+
 // styles
 import '../../../styles/Play/Game.css';
 
@@ -29,6 +32,9 @@ const Game = () => {
   const {
     currentUser
   } = useAuth();
+
+  // useNavigate
+  const navigate = useNavigate();
 
   // database
   const database = getDatabase();
@@ -45,10 +51,17 @@ const Game = () => {
   // useLocation
   const location = useLocation();
 
-  const { name, code } = location.state;
+  const { name, code } = location.state || "";
 
   // questions state
   const [questions, setQuestions] = useState([]);
+
+  // useEffect
+  useEffect(() => {
+    if (!code || !name || questions.length === 0) {
+      navigate("/");
+    }
+  }, [code, name, navigate, questions]);
 
   // currentQuestion state
   const [currentQuestion, setCurrentQuestion] = useState(1);
