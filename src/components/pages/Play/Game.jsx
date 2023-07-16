@@ -58,7 +58,7 @@ const Game = () => {
 
   // useEffect
   useEffect(() => {
-    if (!code || !name || questions.length === 0) {
+    if (!code && !name) {
       navigate("/");
     }
   }, [code, name, navigate, questions]);
