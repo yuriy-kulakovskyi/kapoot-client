@@ -15,6 +15,9 @@ import '../../../styles/Play/Play.css';
 // Header component
 import Header from "../../Header";
 
+// onValue
+import { onValue } from "firebase/database";
+
 // Link from react-router-dom
 import { Link } from 'react-router-dom';
 
@@ -36,12 +39,46 @@ const Play = ({ language }) => {
   // gamesRef
   const gamesRef = useRef();
 
+  // matched state
+  const [matched, setMatched] = useState(false);
+
+  // error state
+  const [error, setError] = useState("");
+
   useEffect(() => {
     if (currentUser) {
       gamesRef.current = ref(database, "/games");
       setName(currentUser.displayName);
     }
-  }, [currentUser, database, gamesRef]);
+
+    onValue(gamesRef.current, (snapshot) => {
+      const data = snapshot.val();
+
+      if (data) {
+        const gameData = Object.values(data);
+
+        // get codes from gameData
+        const gameCodes = gameData.map((game) => {
+          return game.value.code;
+        });
+
+        // check if code is equal to any code in gameCodes
+        gameCodes.forEach((gameCode) => {
+          if (code === gameCode.toString()) {
+            setMatched(true);
+          } else {
+            setMatched(false)
+          }
+        });
+      }
+    });
+  }, [currentUser, database, gamesRef, code]);
+
+  const checkCode = () => {
+    !matched && setError(
+      language === "en" ? "Code is not valid" : language === "ua" ? "Код недійсний" : "Kod jest nieprawidłowy"
+    );
+  }
 
   return (
     <section className='play'>
@@ -70,7 +107,8 @@ const Play = ({ language }) => {
 
         {/* button which will redirect to the game */}
         <Link 
-          to={"/game"}
+          to={matched && "/game"}
+          onClick={checkCode}
           className='play__button'
           state={{
             name: name,
@@ -80,6 +118,10 @@ const Play = ({ language }) => {
           {/* according to the chosen language display text */}
           {language === "en" ? "Play" : language === "ua" ? "Грати" : "Grać"}
         </Link>
+        <div className="play__error">
+          {/* according to the chosen language display text */}
+          {error}
+        </div>
       </div>
     </section>
   );

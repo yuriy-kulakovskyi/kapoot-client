@@ -110,3 +110,10 @@
   bottom: -15vmin; right: -15vmin;
   z-index: 0;
 }
+
+/* error */
+.play__error {
+  color: #ff0000;
+  font-size: 12px;
+  margin-top: 10px;
+}
