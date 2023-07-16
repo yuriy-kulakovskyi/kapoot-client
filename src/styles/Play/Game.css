@@ -198,3 +198,10 @@
 .fullScreen .game__footer-score-number {
   font-size: 35px;
 }
+
+/* Media */
+@media screen and (max-width: 445px) {
+  .question__title {
+    font-size: 15px;
+  }
+}
