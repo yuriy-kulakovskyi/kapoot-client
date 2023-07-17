@@ -18,6 +18,9 @@ import Header from "../../Header";
 // onValue
 import { onValue } from "firebase/database";
 
+// push from firebase
+import { push } from "firebase/database";
+
 // Link from react-router-dom
 import { Link } from 'react-router-dom';
 
@@ -39,6 +42,9 @@ const Play = ({ language }) => {
   // gamesRef
   const gamesRef = useRef();
 
+  // playersRef
+  const playersRef = useRef();
+
   // matched state
   const [matched, setMatched] = useState(false);
 
@@ -49,6 +55,8 @@ const Play = ({ language }) => {
     if (currentUser) {
       gamesRef.current = ref(database, "/games");
       setName(currentUser.displayName);
+
+      playersRef.current = ref(database, "/players");
     }
 
     onValue(gamesRef.current, (snapshot) => {
@@ -75,9 +83,10 @@ const Play = ({ language }) => {
   }, [currentUser, database, gamesRef, code]);
 
   const checkCode = () => {
-    !matched && setError(
-      language === "en" ? "Code is not valid" : language === "ua" ? "Код недійсний" : "Kod jest nieprawidłowy"
-    );
+    !matched &&
+      setError(
+        language === "en" ? "Code is not valid" : language === "ua" ? "Код недійсний" : "Kod jest nieprawidłowy"
+      );
   }
 
   return (

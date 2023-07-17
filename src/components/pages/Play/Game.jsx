@@ -9,8 +9,8 @@ import { onValue } from "firebase/database";
 // useAuth
 import { useAuth } from '../../../contexts/AuthContext';
 
-// getDatabase, ref
-import { getDatabase, ref } from "firebase/database";
+// getDatabase, ref, update from firebase
+import { getDatabase, ref, update } from "firebase/database";
 
 // styles
 import '../../../styles/Play/Game.css';
@@ -42,9 +42,13 @@ const Game = () => {
   // gamesRef
   const gamesRef = useRef();
 
+  // playersRef
+  const playersRef = useRef();
+
   useEffect(() => {
     if (currentUser) {
       gamesRef.current = ref(database, "/games");
+      playersRef.current = ref(database, "/players");
     }
   }, [currentUser, database, gamesRef]);
 
@@ -99,21 +103,29 @@ const Game = () => {
   }, [code]);
 
   // answerQuestion function
-  const answerQuestion = (question, answer) => {
-    // check if currentQuestion is less than questions length
+  const answerQuestion = (question, selectedAnswer) => {
     if (currentQuestion <= questions.length) {
-      // check if answer is equal to one of the elements in question.correctAnswers
-      question.correctAnswers.forEach((correctAnswer) => {
-        if (answer === question.answers[correctAnswer]) {
-          // increment score
-          setScore(score + 1000);
-        }
-      });
+      if(question.correctAnswers.includes(question.answers.indexOf(selectedAnswer))) {
+        setScore(score + 1000);
+      }
 
-      // increment currentQuestion
       setCurrentQuestion(currentQuestion + 1);
     }
-  }
+  };  
+  
+  // when the user has answered all questions and the game is over push update his score to the database
+  useEffect(() => {
+    if (currentQuestion > questions.length) {
+      // update score
+      update(ref(database, `/players/${currentUser.uid}`), {
+        value: {
+          name: name,
+          score: score,
+          game: code
+        }
+      });
+    }
+  }, [currentQuestion, database, name, playersRef, questions.length, score, setScore, code, currentUser]);
 
   return (
     <section className='game'>
@@ -129,39 +141,38 @@ const Game = () => {
       {
         // show questions according to currentQuestion
         questions.map((question, key) => {
-          if (currentQuestion === key + 1) {
-            return (
-              <div key={key} className="question">
-                <h1 className='question__title'>{question.question}</h1>
-                {/* display answers */}
-                <div className="question__answers">
-                  {
-                    question.answers.map((answer, key) => {
-                      return (
-                        <div key={key} className="question__answer">
-                          <button
-                            className={"question__answer-button button" + key}
-                            onClick={() => answerQuestion(question, answer)}
-                          >
-                            <span className='answer__figure-wrap'>{
-                              // depending on key, display a figure
-                              key === 0 ? <div className='answer__figure triangle'></div> : 
-                              key === 1 ? <div className='answer__figure rhombus'></div> :
-                              key === 2 ? <div className='answer__figure circle'></div> :
-                              <div className='answer__figure square'></div>
-                            }</span>
+          return (
+            currentQuestion === key + 1 &&
+            <div key={key} className="question">
+              <h1 className='question__title'>{question.question}</h1>
+              {/* display answers */}
+              <div className="question__answers">
+                {
+                  question.answers.map((answer, key) => {
+                    return (
+                      <div key={key} className="question__answer">
+                        <button
+                          className={"question__answer-button button" + key}
+                          onClick={() => answerQuestion(question, answer)}
+                        >
+                          <span className='answer__figure-wrap'>{
+                            // depending on key, display a figure
+                            key === 0 ? <div className='answer__figure triangle'></div> : 
+                            key === 1 ? <div className='answer__figure rhombus'></div> :
+                            key === 2 ? <div className='answer__figure circle'></div> :
+                            <div className='answer__figure square'></div>
+                          }</span>
 
-                            <span className='answer__text'>
-                              {answer}
-                            </span>
-                          </button>
-                        </div>
-                      )
-                    })}
-                </div>
+                          <span className='answer__text'>
+                            {answer}
+                          </span>
+                        </button>
+                      </div>
+                    )
+                  })}
               </div>
-            )
-          }
+            </div>
+          )
         })}
 
       {/* display footer */}
