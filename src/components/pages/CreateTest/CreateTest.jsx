@@ -103,6 +103,7 @@ const CreateTest = ({ language }) => {
                 index={id}
                 question={question.question}
                 setQuestions={setQuestions}
+                language={language}
               />
 
               <div className="create-test__answers">

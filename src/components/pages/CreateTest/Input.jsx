@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 
-const Input = ({ index, question, setQuestions }) => {
+const Input = ({ index, question, setQuestions, language }) => {
   // input state
   const [input, setInput] = useState(question);
 
   return (
     <input 
       type="text" 
-      placeholder="Enter a question"
+      placeholder=
+      {language === 'en' ? "Enter question" : language === "ua" ? "Введіть питання" : "Wprowadź pytanie"}
       className='create-test__input'
       value={input}
       onChange={(event) => {
