@@ -83,6 +83,9 @@ const LibMain = ({ language }) => {
   // questions array
   let qns = [];
 
+  // descriptions array
+  let descriptions = [];
+
   // save test to database function
   const handleClick = async (name) => {
 
@@ -111,6 +114,11 @@ const LibMain = ({ language }) => {
         // get questions from gameData
         qns = gameData.map((game) => {
           return game.value.quiz.questions;
+        });
+
+        // get descriptions from gameData
+        descriptions = gameData.map((game) => {
+          return game.value.quiz.description;
         });
 
         // check if code is equal to any code in gameCodes
@@ -169,12 +177,18 @@ const LibMain = ({ language }) => {
       <ul className="library-test__list">
         {names.length !== 0 ? filterQuizzes.map((quiz, index) => {
           return (
-            <li className='host-test__quiz' key={index}>
+            <li className='library-test__quiz' key={index}>
               <div className="quiz__image">
                 <img src={coverImage} alt={"Cover img" + index} />
               </div>
               <div className="quiz__info">
-                <h1 className='quiz__title'>{quiz}</h1>
+                <Link 
+                  to={"/edit"}
+                  className='quiz__title'
+                  state={{ title: quiz, description: descriptions[index], questions: qns[index] }}
+                >
+                  {quiz}
+                </Link>
 
                 <Link
                   to={"/host"}

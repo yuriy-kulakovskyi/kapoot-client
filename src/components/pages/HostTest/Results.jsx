@@ -28,11 +28,12 @@ const Results = () => {
 
   // database
   const database = getDatabase();
-  const gamesRef = ref(database, "/games");
+  const gamesRef = useRef();
   const playersRef = useRef();
 
   // useEffect
   useEffect(() => {
+    gamesRef.current = ref(database, "/games");
     playersRef.current = ref(database, "/players");
   }, [database, playersRef]);
 
@@ -40,10 +41,10 @@ const Results = () => {
   // players state
   const [players, setPlayers] = useState([]);
 
-  // delete game from database by code if the user left the page
+  // delete game from database and all players by code if the user left the page
   window.onbeforeunload = () => {
     // onValue
-    onValue(gamesRef, (snapshot) => {
+    onValue(gamesRef.current, (snapshot) => {
       const data = snapshot.val();
 
       // if data exists
@@ -54,6 +55,22 @@ const Results = () => {
           if (data[key].value.code === code) {
             // remove from database
             remove(ref(database, `/games/${key}`));
+          }
+        });
+      }
+    });
+
+    onValue(playersRef.current, (snapshot) => {    
+      const data = snapshot.val();
+
+      // if data exists
+      if (data) {
+        // foreach loop through data
+        Object.keys(data).forEach((key) => {
+          // if code matches
+          if (data[key].value.game === code.toString()) {
+            // remove from database
+            remove(ref(database, `/players/${key}`));
           }
         });
       }

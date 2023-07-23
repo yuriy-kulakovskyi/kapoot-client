@@ -1,51 +1,57 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const Answer = ({ id, figure, updateInputValue, setCorrectAnswers, unsetCorrectAnswers, clearInput, setClearInput }) => {
-  // input state
-  const [inputVal, setInputVal] = useState("");
-
+const Answer = ({ index, setQuestions, answers, correctAnswers, questionIndex, figure }) => {
   // isChecked state
-  const [isChecked, setIsChecked] = useState(false);
-
-  // set input value to value prop
-  const updateInput = (value) => {
-    setClearInput(false);
-    setInputVal(value);
-    updateInputValue(id, value);
-  }
-
-  useEffect(() => {
-    if (clearInput) { 
-      setInputVal("");
-      setIsChecked(false);
-    }
-  }, [clearInput])
+  const [isChecked, setIsChecked] = useState(correctAnswers.includes(index));
 
   return (
-    <div className={"answer " + "answer--" + figure}>
+    <li className={"answer " + "answer--" + figure}>
       <div className="answer__head">
-        {/* checkbox to set correct answer */}
-        <div className="head__checkbox">
-          <input 
-            type="checkbox"
-            checked={isChecked}
-            className="answer__checkbox"
-            onChange={e => {
-              setIsChecked(e.target.checked)
-              e.target.checked ? setCorrectAnswers(id) : unsetCorrectAnswers(id)}
-            }
-          />
-        </div>
-      </div>
-      <div className="answer__body">
         <input
-          type="text"
-          value={clearInput ? "" : inputVal}
-          className='answer__input'
-          onChange={(e) => updateInput(e.target.value)}
+          type="checkbox"
+          checked={isChecked}
+          className="answer__checkbox"
+          onChange={() => {
+            // update questions state
+            setQuestions(prevQuestions => {
+              const newQuestions = [...prevQuestions];
+              
+              if (isChecked) {
+                newQuestions[questionIndex].correctAnswers = newQuestions[questionIndex].correctAnswers.filter((value) => {
+                  return value !== index;
+                });
+              } else {
+                newQuestions[questionIndex].correctAnswers.push(index);
+              }
+
+              // delete duplicate values
+              newQuestions[questionIndex].correctAnswers = newQuestions[questionIndex].correctAnswers.filter((value, index, self) => {
+                return self.indexOf(value) === index;
+              });
+
+              return newQuestions;
+            })
+            setIsChecked(!isChecked);
+          }}
         />
       </div>
-    </div>
+
+      <div className="answer__body">
+        <input 
+          type="text" 
+          className='answer__input'
+          value={answers[index]}
+          onChange={(event) => {
+            // update questions state
+            setQuestions(prevQuestions => {
+              const newQuestions = [...prevQuestions];
+              newQuestions[questionIndex].answers[index] = event.target.value;
+              return newQuestions;
+            })
+          }}
+        />
+      </div>
+    </li>
   );
 }
 

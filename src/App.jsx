@@ -42,6 +42,9 @@ import Library from './components/pages/Library/Library';
 // Settings component link
 import Settings from './components/pages/Settings/Settings';
 
+// Edit component link
+import Edit from './components/pages/Edit/Edit';
+
 function App() {
   return (
     <AuthProvider>
@@ -69,6 +72,7 @@ function App() {
           <Route path="/game" element={<Game />} />
           <Route path="/results" element={<UserResults />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/edit" element={<Edit />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

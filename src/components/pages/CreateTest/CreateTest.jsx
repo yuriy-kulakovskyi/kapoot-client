@@ -12,6 +12,9 @@ import Header from '../../Header';
 // Settings component import
 import Settings from './Settings';
 
+// Input component import
+import Input from './Input';
+
 // connect to redux
 import { connect } from 'react-redux';
 
@@ -45,78 +48,24 @@ const blocks = [
 ];
 
 const CreateTest = ({ language }) => {
-  // questionInputValue state
-  const [questionInputValue, setQuestionInputValue] = useState('');
+  // questions state
+  const [questions, setQuestions] = useState([{
+    answers: ["", "", "", ""],
+    correctAnswers: [],
+    question: ""
+  }]);
 
-  // answers state
-  const [answers, setAnswers] = useState([]);
+  // currentQuestionStep state
+  const [currentQuestionStep, setCurrentQuestionStep] = useState(0);
 
-  // correct answer state
-  const [correctAnswer, setCorrectAnswer] = useState([]);
-
-  // clearInput state
-  const [clearInput, setClearInput] = useState(false);
+  // open settings state
+  const [openSettings, setOpenSettings] = useState(false);
 
   // title state
   const [title, setTitle] = useState('');
 
   // description state
   const [description, setDescription] = useState('');
-
-  // questions state
-  const [questions, setQuestions] = useState([]);
-
-  // open settings state
-  const [openSettings, setOpenSettings] = useState(false);
-
-  // updateInputValue function
-  const updateInputValue = (index, value) => {
-    const newInputValues = [...answers];
-    newInputValues[index] = value;
-    setAnswers(newInputValues);
-  };
-
-  // setCorrectAnswers function
-  const setCorrectAnswers = (index) => {
-    const newCorrectAnswers = [...correctAnswer];
-    newCorrectAnswers[index] = index;
-    setCorrectAnswer(newCorrectAnswers);
-  };
-
-  // unsetCorrectAnswers function
-  const unsetCorrectAnswers = (index) => {
-    const newCorrectAnswers = [...correctAnswer];
-    newCorrectAnswers[index] = null;
-    setCorrectAnswer(newCorrectAnswers);
-  };
-
-  // updateTest function
-  const updateTest = () => {
-    // delete empty answers
-    const filteredAnswers = correctAnswer.filter(answer => answer !== null && answer !== undefined);
-
-    const question = {
-      id: questions.length,
-      question: questionInputValue,
-      answers: answers,
-      correctAnswers: filteredAnswers,
-    };
-
-    // push question to questions
-    setQuestions([...questions, question]);
-
-    // clear questionInputValue
-    setQuestionInputValue("");
-
-    // clear answers
-    setAnswers([]);
-
-    // clear correctAnswer
-    setCorrectAnswer([]);
-
-    // clear input values
-    setClearInput(true);
-  };
 
   return (
     <section className='create-test'>
@@ -145,40 +94,46 @@ const CreateTest = ({ language }) => {
 
       {/* padding wrapper */}
       {!openSettings && <div className="padding-wrapper">
-        <input
-          type="text"
-          className='create-test__input'
-          placeholder=
-          {language === 'en' ? 'Enter your question' : language === "ua" ? 'Введіть ваше запитання' : 'Wprowadź swoje pytanie'}
-          value={questionInputValue}
-          onChange={(e) => setQuestionInputValue(e.target.value)}
-        />
-
-        {/* Answers */}
-        <div className="create__test__answers">
-          <div className="answers__blocks">
-            {/* Display answers figuring on currentQuestion else map blocks */}
-            {blocks.map((block, index) => (
-              <Answer
-                key={index}
-                id={index}
-                figure={block.figure}
-                updateInputValue={updateInputValue}
-                setCorrectAnswers={setCorrectAnswers}
-                unsetCorrectAnswers={unsetCorrectAnswers}
-                clearInput={clearInput}
-                setClearInput={setClearInput}
+        {questions.map((question, id) => {
+          // display questions according to currentQuestionStep
+          return (
+            id === currentQuestionStep &&
+            <div className='padding-wrapper__gap' key={id}>
+              <Input
+                index={id}
+                question={question.question}
+                setQuestions={setQuestions}
               />
-            ))}
-          </div>
-        </div>
 
-        {/* Footer */}
-        <Footer
-          updateTest={updateTest}
-          questions={questions.length}
-        />
+              <div className="create-test__answers">
+                <div className="answers__blocks">
+                  {question.answers.map((answer, index) => {
+                    return (
+                      <Answer
+                        key={index}
+                        index={index}
+                        figure={blocks[index].figure}
+                        setQuestions={setQuestions}
+                        answers={question.answers}
+                        correctAnswers={question.correctAnswers}
+                        questionIndex={id}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )
+        })}
       </div>}
+
+      {!openSettings && <Footer
+        questions={questions}
+        setQuestions={setQuestions}
+        setCurrentQuestionStep={setCurrentQuestionStep}
+        currentQuestionStep={currentQuestionStep}
+        language={language}
+      />}
     </section>
   );
 }

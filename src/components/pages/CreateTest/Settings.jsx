@@ -21,7 +21,7 @@ const Settings = ({ setOpenSettings, language, setTitle, setDescription, title, 
   };
 
   return (
-    <section className='settings'>
+    <section className='create-test__settings'>
       <h1 className="settings__title">
         {language === 'en' ? "Kapoot summary" : language === "ua" ? "Огляд капуту" : "Podsumowanie kaputu"}
       </h1>

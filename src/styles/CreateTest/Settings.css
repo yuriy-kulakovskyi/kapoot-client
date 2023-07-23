@@ -1,17 +1,17 @@
-.settings {
+.create-test__settings {
   width: 100%; min-height: 100vh;
   padding: 24px 24px 8px;
 }
 
 /* title */
-.settings__title {
+.create-test__settings .settings__title {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 16px;
 }
 
 /* wrapper */
-.settings__wrapper {
+.create-test__settings .settings__wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -21,19 +21,19 @@
   padding: 2rem 0;
 }
 
-.settings__wrapper .input {
+.create-test__settings .settings__wrapper .input {
   display: flex;
   flex-direction: column;
   gap: .5rem;
-  width: 60%;
+  width: 90%;
 }
 
-.input label {
+.create-test__settings .input label {
   font-size: 18px;
   font-weight: 900;
 }
 
-.input input {
+.create-test__settings .input input {
   width: 100%; min-height: 2.75rem;
   border-radius: .25rem;
   border: 1px solid rgb(178, 178, 178)!important;
@@ -44,7 +44,7 @@
   font-family: "Montserrat", sans-serif;
 }
 
-.input textarea {
+.create-test__settings .input textarea {
   width: 100%; min-height: 9rem;
   border-radius: .25rem;
   border: 1px solid rgb(178, 178, 178)!important;
@@ -57,7 +57,7 @@
 }
 
 /* footer */
-.settings__footer {
+.create-test__settings .settings__footer {
   position: fixed;
   bottom: 0; left: 0;
   width: 100%;
@@ -68,7 +68,7 @@
   padding: 16px;
 }
 
-.settings__button {
+.create-test__settings .settings__button {
   position: relative;
   border-radius: .25rem;
   border: none;
@@ -82,19 +82,19 @@
 }
 
 /* hover */
-.settings__button:hover {
+.create-test__settings .settings__button:hover {
   top: .125rem;
   box-shadow: none;
 }
 
 /* cancel */
-.settings__cancel {
+.create-test__settings .settings__cancel {
   background-color: rgb(242, 242, 242);
   color: rgb(0, 0, 0);
 }
 
 /* done */
-.settings__done {
+.create-test__settings .settings__done {
   background-color: rgb(38, 137, 12);
   color: #fff;
 }
@@ -102,7 +102,15 @@
 
 /* Media */
 @media screen and (min-width: 768px) {
-  .settings__wrapper {
+  .create-test__settings .settings__wrapper {
     align-items: center;
+  }
+
+  .create-test__settings .settings__wrapper .input {
+    width: 60%;
+  }
+
+  .create-test__settings .settings__title {
+    text-align: center;
   }
 }

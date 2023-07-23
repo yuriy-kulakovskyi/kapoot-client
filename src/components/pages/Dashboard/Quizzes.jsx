@@ -64,6 +64,9 @@ const Quizes = ({ language }) => {
   // names state
   const [names, setNames] = useState([]);
 
+  // descriptions state
+  const [descriptions, setDescriptions] = useState([]);
+
   useEffect(() => {
     // Get data from the database
     onValue(quizzesRef.current, (snapshot) => {
@@ -84,8 +87,17 @@ const Quizes = ({ language }) => {
           return quiz.value.questions;
         });
 
+        // get description from gameData
+        const quizDescriptions = quizData.map((game) => {
+          return game.value.description;
+        });
+
+        // push quizDescriptions to descriptions
+        setDescriptions(quizDescriptions);
+
         // push quizQuestions to questions
         setQuestions(quizQuestions);
+
 
       } else {
         setNames([]);
@@ -175,7 +187,13 @@ const Quizes = ({ language }) => {
                 <img src={coverImage} alt={"Cover img" + index} />
               </div>
               <div className="quiz__info">
-                <h1 className='quiz__title'>{quiz}</h1>
+                <Link 
+                  to={"/edit"}
+                  className='quiz__title'
+                  state={{ title: quiz, description: descriptions[index], questions: questions[index] }}
+                >
+                    {quiz}
+                </Link>
 
                 <Link
                   to={"/host"}

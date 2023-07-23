@@ -55,7 +55,8 @@
 }
 
 /* quiz styles */
-.host-test__quiz {
+.host-test__quiz,
+.library-test__quiz {
   width: 90%;
   max-width: 700px;
   display: flex;
