@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+// useNavigate
+import { useNavigate } from 'react-router-dom';
 
 // Answer component import
 import Answer from './Answer';
@@ -20,6 +23,9 @@ import { connect } from 'react-redux';
 
 // styles
 import '../../../styles/CreateTest/CreateTest.css';
+
+// delete icon
+import DeleteIcon from '../../../assets/svg/delete.svg';
 
 const blocks = [
   {
@@ -48,6 +54,9 @@ const blocks = [
 ];
 
 const CreateTest = ({ language }) => {
+  // navigate
+  const navigate = useNavigate();
+    
   // questions state
   const [questions, setQuestions] = useState([{
     answers: ["", "", "", ""],
@@ -66,6 +75,13 @@ const CreateTest = ({ language }) => {
 
   // description state
   const [description, setDescription] = useState('');
+
+  // isOpen state
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    questions.length === 0 && navigate("/");
+  }, [questions, navigate])
 
   return (
     <section className='create-test'>
@@ -99,12 +115,54 @@ const CreateTest = ({ language }) => {
           return (
             id === currentQuestionStep &&
             <div className='padding-wrapper__gap' key={id}>
-              <Input
-                index={id}
-                question={question.question}
-                setQuestions={setQuestions}
-                language={language}
-              />
+              <div className="gap__row">
+                <Input
+                  index={id}
+                  question={question.question}
+                  setQuestions={setQuestions}
+                  language={language}
+                />
+
+                {/* button which has a dropdown menu */}
+                <div className="row__dropdown">
+                  <button 
+                      className='dropdown__button'
+                      onClick={() => setIsOpen(!isOpen)}
+                    >
+                    <span className="dropdown__button-text">⋮</span>
+                  </button>
+                  
+                  {/* dropdown menu */}
+                  {isOpen && <div className="dropdown__menu">
+                    <ul className='dropdown__menu-list'>
+                      <li className='list__item'>
+                        <button
+                          className='dropdown__menu-item'
+                          onClick={() => {
+                            // remove current question
+                            setQuestions(questions.filter((question, index) => index !== id));
+
+                            // if currentQuestionStep is not 0, then decrease it by 1
+                            if (currentQuestionStep !== 0) {
+                              setCurrentQuestionStep(currentQuestionStep - 1);
+                              setIsOpen(false);
+                            }
+                          }}
+                        >
+                          {/* delete icon */}
+                          <img
+                            src={DeleteIcon}
+                            alt="delete icon"
+                            className='dropdown__menu-icon'
+                          />
+
+                          {language === 'en' ? "Delete" : language === 'ua' ? "Видалити" : "Usunąć"}
+                        </button>
+                      </li>
+                    </ul>
+                  </div>}
+                </div>
+              </div>
 
               <div className="create-test__answers">
                 <div className="answers__blocks">
@@ -134,6 +192,7 @@ const CreateTest = ({ language }) => {
         setCurrentQuestionStep={setCurrentQuestionStep}
         currentQuestionStep={currentQuestionStep}
         language={language}
+        setIsOpen={setIsOpen}
       />}
     </section>
   );

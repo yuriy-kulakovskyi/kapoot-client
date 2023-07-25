@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Footer = ({ questions, setQuestions, setCurrentQuestionStep, currentQuestionStep, language }) => {
+const Footer = ({ questions, setQuestions, setCurrentQuestionStep, currentQuestionStep, language, setIsOpen }) => {
   return (
     <footer className='footer'>
       <ul className='footer__question-links'>
@@ -14,9 +14,17 @@ const Footer = ({ questions, setQuestions, setCurrentQuestionStep, currentQuesti
                 className={currentQuestionStep === id ? "question-link link-active" : "question-link"}
                 onClick={() => {
                   setCurrentQuestionStep(id);
+                  setIsOpen(false);
                 }}
               >{question.question ? 
-                question.question : 
+
+                question.question.length > 8 ?
+
+                question.question.slice(0, 8) + "..." :
+
+                question.question
+                
+                :
                 // according to the chosen language display text
                 language === 'en' ? "Question" : language === 'ua' ? "Питання" :  "Pytanie"
               }
@@ -41,6 +49,8 @@ const Footer = ({ questions, setQuestions, setCurrentQuestionStep, currentQuesti
           });
 
           setCurrentQuestionStep(currentQuestionStep + 1);
+
+          setIsOpen(false);
         }}
       >+</button>
     </footer>

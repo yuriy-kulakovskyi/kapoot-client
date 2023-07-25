@@ -91,7 +91,7 @@ const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTes
   // save test to database function
   const save = async () => {
     // push question to database
-    if (quizzesRef) {
+    if (quizzesRef.current) {
       try {
         await push(quizzesRef.current, {
           value: {
@@ -166,7 +166,14 @@ const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTes
           {creatingTest && currentUser && (
             <li className="nav__item">
               <button 
-                className={`nav__link nav__link--save ${title !== "" && description !== "" ? '' : 'disabled'}`} 
+                className={`nav__link nav__link--save ${
+                  title !== "" && 
+                  description !== "" &&
+                  questions.length !== 0 &&
+                  questions.every((question) => question.question !== "" && question.answers.every((answer) => answer !== "")) &&
+                  questions.every((question) => question.correctAnswers.length !== 0)
+                  ? '' : 'disabled'
+                }`} 
                 onClick={save}
               >
                 <span className="link__text">

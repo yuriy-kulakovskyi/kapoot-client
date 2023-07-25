@@ -8,7 +8,7 @@ const Input = ({ index, question, setQuestions, language }) => {
     <input 
       type="text" 
       placeholder=
-      {language === 'en' ? "Enter question" : language === "ua" ? "Введіть питання" : "Wprowadź pytanie"}
+      {language === 'en' ? "Enter the question..." : language === "ua" ? "Введіть питання..." : "Wprowadź pytanie..."}
       className='create-test__input'
       value={input}
       onChange={(event) => {
