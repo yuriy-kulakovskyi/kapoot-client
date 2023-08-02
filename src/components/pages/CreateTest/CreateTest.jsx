@@ -21,6 +21,9 @@ import Input from './Input';
 // connect to redux
 import { connect } from 'react-redux';
 
+// location state
+import { useLocation } from "react-router-dom";
+
 // styles
 import '../../../styles/CreateTest/CreateTest.css';
 
@@ -56,9 +59,15 @@ const blocks = [
 const CreateTest = ({ language }) => {
   // navigate
   const navigate = useNavigate();
+
+  // location
+  const location = useLocation();
+
+  // get data from location state
+  const { editId, editQuestions, editTitle, editDescription } = location.state || "";
     
   // questions state
-  const [questions, setQuestions] = useState([{
+  const [questions, setQuestions] = useState(editQuestions || [{
     answers: ["", "", "", ""],
     correctAnswers: [],
     question: ""
@@ -71,10 +80,10 @@ const CreateTest = ({ language }) => {
   const [openSettings, setOpenSettings] = useState(false);
 
   // title state
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState(editTitle || '');
 
   // description state
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(editDescription || '');
 
   // isOpen state
   const [isOpen, setIsOpen] = useState(false);
@@ -106,6 +115,7 @@ const CreateTest = ({ language }) => {
         title={title}
         description={description}
         questions={questions}
+        editId={editId && editId}
       />}
 
       {/* padding wrapper */}

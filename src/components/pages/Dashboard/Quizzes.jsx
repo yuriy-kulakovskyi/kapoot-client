@@ -1,8 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-// onValue
-import { onValue } from "firebase/database";
-
 // cover image import
 import coverImage from "./img/cover-img.png";
 
@@ -10,7 +7,7 @@ import coverImage from "./img/cover-img.png";
 import "../../../styles/Dashboard/Quizzes.css";
 
 // firebase
-import { getDatabase, ref } from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 // push from firebase
 import { push } from "firebase/database";
@@ -36,6 +33,9 @@ const Quizes = ({ language }) => {
   // questions state
   const [questions, setQuestions] = useState([]);
 
+  // identifiers state
+  const [identifiers, setIdentifiers] = useState([]);
+
   // database
   const database = getDatabase();
 
@@ -47,12 +47,6 @@ const Quizes = ({ language }) => {
 
   // generate random code but if it's already in the database generate another one and don't allow code less than 15 digits
   let code = Math.floor(Math.random() * 1000000000000000);
-
-  // questions array
-  let qns = [];
-
-  // quizzesNames array
-  let quizzesNames = [];
 
   useEffect(() => {
     if (currentUser) {
@@ -92,12 +86,19 @@ const Quizes = ({ language }) => {
           return game.value.description;
         });
 
+        // get identifiers from quizData
+        const quizIdentifiers = quizData.map((game) => {
+          return game.value.id;
+        });
+
         // push quizDescriptions to descriptions
         setDescriptions(quizDescriptions);
 
         // push quizQuestions to questions
         setQuestions(quizQuestions);
 
+        // push quizIdentifiers to identifiers
+        setIdentifiers(quizIdentifiers);
 
       } else {
         setNames([]);
@@ -123,16 +124,6 @@ const Quizes = ({ language }) => {
         // get codes from gameData
         const gameCodes = gameData.map((game) => {
           return game.value.code;
-        });
-
-        // get names from gameData
-        quizzesNames = gameData.map((game) => {
-          return game.value.quiz.title;
-        });
-
-        // get questions from gameData
-        qns = gameData.map((game) => {
-          return game.value.quiz.questions;
         });
 
         // check if code is equal to any code in gameCodes
@@ -190,7 +181,7 @@ const Quizes = ({ language }) => {
                 <Link 
                   to={"/edit"}
                   className='quiz__title'
-                  state={{ title: quiz, description: descriptions[index], questions: questions[index] }}
+                  state={{ id: identifiers[index], title: quiz, description: descriptions[index], questions: questions[index] }}
                 >
                     {quiz}
                 </Link>

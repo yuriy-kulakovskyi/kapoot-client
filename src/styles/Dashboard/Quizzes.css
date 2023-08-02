@@ -31,11 +31,6 @@
   transition: all .2s ease-in-out;
 }
 
-.quizzes__quiz,
-.library-test__quiz {
-  cursor: pointer;
-}
-
 .quiz__title {
   font-family: "Montserrat", sans-serif;
   font-size: .9rem;
@@ -44,8 +39,9 @@
   font-weight: 700;
 }
 
-.quizzes__quiz:hover .quiz__title,
-.library-test__quiz:hover .quiz__title {
+
+
+.quizzes__quiz:hover .quiz__title {
   text-decoration: underline;
 }
 

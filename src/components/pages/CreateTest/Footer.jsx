@@ -48,7 +48,7 @@ const Footer = ({ questions, setQuestions, setCurrentQuestionStep, currentQuesti
             return newQuestions;
           });
 
-          setCurrentQuestionStep(currentQuestionStep + 1);
+          setCurrentQuestionStep(questions.length);
 
           setIsOpen(false);
         }}

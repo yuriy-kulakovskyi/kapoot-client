@@ -72,19 +72,10 @@ const LibMain = ({ language }) => {
         setNames([]);
       }
     });
-  }, [setNames]);
+  }, [setNames, quizzesRef]);
 
   // generate random code but if it's already in the database generate another one and don't allow code less than 15 digits
   let code = Math.floor(Math.random() * 1000000000000000);
-
-  // names array
-  let quizzesNames = [];
-
-  // questions array
-  let qns = [];
-
-  // descriptions array
-  let descriptions = [];
 
   // save test to database function
   const handleClick = async (name) => {
@@ -104,21 +95,6 @@ const LibMain = ({ language }) => {
         // get codes from gameData
         const gameCodes = gameData.map((game) => {
           return game.value.code;
-        });
-
-        // get names from gameData
-        quizzesNames = gameData.map((game) => {
-          return game.value.quiz.title;
-        });
-
-        // get questions from gameData
-        qns = gameData.map((game) => {
-          return game.value.quiz.questions;
-        });
-
-        // get descriptions from gameData
-        descriptions = gameData.map((game) => {
-          return game.value.quiz.description;
         });
 
         // check if code is equal to any code in gameCodes
@@ -182,13 +158,7 @@ const LibMain = ({ language }) => {
                 <img src={coverImage} alt={"Cover img" + index} />
               </div>
               <div className="quiz__info">
-                <Link 
-                  to={"/edit"}
-                  className='quiz__title'
-                  state={{ title: quiz, description: descriptions[index], questions: qns[index] }}
-                >
-                  {quiz}
-                </Link>
+                <h3 className='quiz__title'>{quiz}</h3>
 
                 <Link
                   to={"/host"}

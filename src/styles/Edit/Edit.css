@@ -1,0 +1,255 @@
+.edit {
+  padding: 64px 0px 85px 78px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.edit__left-part {
+  width: 100%;
+  box-shadow: 0 0 3px rgba(0, 0, 0, .25);
+  position: relative;
+  padding: 18px;
+}
+
+/* buttons */
+.edit__buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  margin: 1rem 0;
+  padding: .3rem 0;
+}
+
+.buttons__button {
+  width: 32px; height: 32px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* hover */
+.buttons__button:hover {
+  opacity: .5;
+}
+
+.buttons__dropdown__button-text {
+  font-size: 32px;
+}
+
+/* dropdown */
+.buttons__dropdown__menu {
+  position: absolute;
+  top: 100%; right: 0;
+}
+
+/* row with the start game button */
+.edit__row {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+
+.edit__row__play-btn {
+  position: relative;
+  background-color: rgb(19, 104, 206);
+  text-decoration: none;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px -4px inset;
+  font-size: .875rem;
+  font-family: Montserrat, "Noto Sans Arabic", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 12px 24px;
+  font-weight: 700;
+  border-radius: 4px;
+  color: #fff;
+}
+
+/* hover */
+.edit__row__play-btn:hover {
+  min-height: 40px;
+  top: 2px;
+  background-color: rgb(18, 96, 190);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px -2px inset;
+}
+
+/* description */
+.edit__description {
+  color: rgb(110, 110, 110);
+  font-size: .875rem;
+  font-weight: 500;
+  letter-spacing: .2px;
+  margin: .6rem 0;
+}
+
+.edit__questions {
+  width: 100%;
+  background-color: rgb(253, 253, 253);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 15px;
+  padding: 18px;
+}
+
+.questions__header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* questions title */
+.questions__title {
+  font-size: 1rem;
+}
+
+/* show/hide button */
+.questions__show-hide {
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+  font-size: .875rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: Montserrat, "Noto Sans Arabic", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* questions list */
+.questions__list {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* questions blocks */
+.questions__question {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid rgb(242, 242, 242);
+  border-radius: .25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* wrapper */
+.question__wrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px 30px;
+  gap: 20px;
+}
+
+.question__text {
+  width: 100%;
+  text-align: center;
+}
+
+/* answers */
+.question__answers {
+  width: 100%;
+}
+
+.answers__answer {
+  width: 100%;
+  box-shadow: 0 0 .7px rgba(0, 0, 0, .25);
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.answer__left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+/* figure */
+.answer__left__figure {
+  width: 32px; height: 32px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* triangle */
+.answer__left__triangle {
+  background-color: rgb(226, 27, 60);
+}
+
+.answer__left__triangle span {
+  width: 0; height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 16px solid #fff;
+}
+
+/* rhombus */
+.answer__left__rhombus {
+  background-color: rgb(19, 104, 206);
+}
+
+.answer__left__rhombus span {
+  width: 14px; height: 14px;
+  transform: rotate(45deg);
+  background-color: #fff;
+}
+
+/* circle */
+.answer__left__circle {
+  background-color: rgb(216, 158, 0);
+}
+
+.answer__left__circle span {
+  width: 18px; height: 18px;
+  background-color: #fff;
+  border-radius: 100%;
+}
+
+/* square */
+.answer__left__square {
+  background-color: rgb(38, 137, 12);
+}
+
+.answer__left__square span {
+  width: 15px; height: 15px;
+  background-color: #fff;
+  border-radius: 2px;
+}
+
+/* option */
+.answer__left__option {
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .edit {
+    padding: 64px 16px 64px 95px;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .edit__left-part {
+    height: 100%;
+  }
+}

@@ -6,6 +6,9 @@ import '../styles/Header.css';
 // Link component from React Router
 import { Link } from 'react-router-dom';
 
+// onValue
+import { onValue } from "firebase/database";
+
 // functions import
 import { changeLanguage, toggleMenu } from '../actions';
 
@@ -13,7 +16,7 @@ import { changeLanguage, toggleMenu } from '../actions';
 import { connect } from "react-redux";
 
 // firebase
-import { getDatabase, ref, push } from "firebase/database";
+import { getDatabase, ref, push, update, get } from "firebase/database";
 
 // useAuth
 import { useAuth } from '../contexts/AuthContext';
@@ -63,7 +66,7 @@ const languages = [
   }
 ];
 
-const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTest, setOpenSettings, title, description, questions, playing, settings }) => {
+const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTest, setOpenSettings, title, description, questions, playing, settings, editId }) => {
   // useAuth
   const { currentUser } = useAuth();
 
@@ -75,6 +78,9 @@ const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTes
 
   // quizzesRef
   const quizzesRef = useRef();
+
+  // generate random id but if it's already in the database generate another one and don't allow code less than 15 digits
+  let id = Math.floor(Math.random() * 1000000000000000);
 
   useEffect(() => {
     if (currentUser) {
@@ -90,25 +96,87 @@ const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTes
 
   // save test to database function
   const save = async () => {
-    // push question to database
-    if (quizzesRef.current) {
-      try {
-        await push(quizzesRef.current, {
-          value: {
-            title: title,
-            description: description,
-            questions: questions
+    if (!editId) {
+      // onValue
+      onValue(quizzesRef.current, (snapshot) => {
+        const data = snapshot.val();
+  
+        if (data) {
+          const quizzesData = Object.values(data);
+  
+          // check if code is equal to any id in quizzesData
+          const checkCode = quizzesData.filter(quiz => quiz.value.id === id);
+  
+          // if checkCode is true generate another id
+          if (checkCode) {
+            id = Math.floor(Math.random() * 1000000000000000);
           }
-        });
+  
+          // if id is less than 15 digits generate another id
+          if (id < 100000000000000) {
+            id = Math.floor(Math.random() * 1000000000000000);
+          }
+        }
+      })
 
-        // navigate to /
-        navigate('/');
-      }
+      // push question to database
+      if (quizzesRef.current) {
+        try {
+          await push(quizzesRef.current, {
+            value: {
+              id: id,
+              title: title,
+              description: description,
+              questions: questions
+            }
+          });
 
-      catch (error) {
-        console.log(error);
+          // navigate to /
+          navigate('/');
+        }
+
+        catch (error) {
+          console.log(error);
+        }
       }
+    } else {
+      // find the quiz with the same id and update it
+      updateQuizData(editId, currentUser, description, title, questions);
+
+      // navigate to /
+      navigate("/");
     }
+  }
+
+  function updateQuizData(editId, currentUser, description, title, questions) {
+    const quizzesRef = ref(database, `quizzes/${currentUser.uid}`);
+  
+    // Use get() to read the data once without continuous listening
+    get(quizzesRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        const quizzesKeys = Object.keys(data);
+        const quizzes = Object.values(data);
+  
+        // Find the index of the quiz to be updated
+        const selectedQuizIndex = quizzes.findIndex(item => item.value.id === editId);
+  
+        // If the quiz to be updated is found
+        if (selectedQuizIndex !== -1) {
+          const selectedQuizKey = quizzesKeys[selectedQuizIndex];
+  
+          // Update the quiz data
+          update(ref(database, `quizzes/${currentUser.uid}/${selectedQuizKey}`), {
+            value: {
+              description: description,
+              id: editId,
+              title: title,
+              questions: questions
+            }
+          });
+        }
+      }
+    });
   }
 
   return (
