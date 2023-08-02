@@ -236,6 +236,7 @@
   position: fixed;
   bottom: 0; left: 0;
   width: 100%; height: 8vh;
+  min-height: 70px;
   padding: .5rem;
   background-color: #fff;
   display: flex;
@@ -314,10 +315,15 @@
 /* Media */
 @media screen and (min-width: 768px) {
   .answers__blocks {
-    gap: 8rem;
+    width: 70%;
   }
 
   .create-test__input {
-    width: 80%;
+    width: 50%;
+  }
+
+  .answer {
+    width: 50%;
+    justify-self: center;
   }
 }
