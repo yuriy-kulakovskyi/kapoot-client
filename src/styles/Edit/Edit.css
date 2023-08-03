@@ -168,7 +168,7 @@
 .answers__answer {
   width: 100%;
   box-shadow: 0 0 .7px rgba(0, 0, 0, .25);
-  padding: 20px 30px;
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -183,7 +183,8 @@
 
 /* figure */
 .answer__left__figure {
-  width: 32px; height: 32px;
+  min-width: 32px; min-height: 32px;
+  max-width: 32px; max-height: 32px;
   border-radius: 3px;
   display: flex;
   justify-content: center;
