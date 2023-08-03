@@ -16,6 +16,7 @@
   background-image: url("../../assets/img/quiz-bg.jpeg");
   background-size: cover;
   background-position: center;
+  background-color: red;
 }
 
 .padding-wrapper__gap {
@@ -312,6 +313,10 @@
   box-shadow: none;
 }
 
+.create-test .aside-menu {
+  display: none;
+}
+
 /* Media */
 @media screen and (min-width: 768px) {
   .create-test__input {
@@ -319,9 +324,97 @@
   }
 }
 
+@media screen and (min-width: 992px) {
+  .padding-wrapper {
+    padding: 85px 0 85px 12rem;
+  }
+
+  .create-test .footer {
+    display: none;
+  }
+
+  .create-test .aside-menu {
+    position: fixed;
+    top: 0; left: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background-color: #fff;
+    /* Fix the aside block's width */
+    width: 12rem;
+    height: 100%;
+    z-index: 9;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .25);
+    padding-bottom: 30px;
+  }
+
+  /* list */
+  .aside__question-links {
+    width: 100%; height: auto; max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+    margin: 80px 0 30px 0;
+  }
+
+  .aside__question-links .links__question {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .aside__question-links .question-link {
+    height: 93px; width: calc(100% - 26px);
+    background-color: rgb(242, 242, 242);
+    border-radius: .25rem;
+    max-width: calc(100% - 26px);
+  }
+
+  /* hover */
+  .aside__question-links .question-link:hover:not(.link-active) {
+    border: 3px solid rgb(178, 178, 178);
+  }
+
+  .aside__question-links .link-active {
+    background-color: #fff;
+  }
+
+  .aside__question-links .question__count {
+    width: 100%;
+    text-align: left;
+    padding: 0 18px;
+  }
+
+  .aside-menu .add-question {
+    margin: 0;
+    border: 0;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 -4px inset;
+    background: rgb(19, 104, 206);
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+    font-size: .875rem;
+    font-weight: 700;
+    text-align: center;
+    min-width: 42px; min-height: 42px;
+    padding: 0 16px 4px;
+    position: relative;
+    font-family: Montserrat, "Noto Sans Arabic", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  /* hover */
+  .aside-menu .add-question:hover {
+    box-shadow: none;
+    padding: 4px 16px;
+  }
+}
+
 @media screen and (min-width: 1000px) {
   .answers__blocks {
-    width: 70%;
+    width: 100%;
   }
 
   .answer {

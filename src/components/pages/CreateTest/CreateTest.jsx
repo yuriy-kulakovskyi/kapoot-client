@@ -29,6 +29,7 @@ import '../../../styles/CreateTest/CreateTest.css';
 
 // delete icon
 import DeleteIcon from '../../../assets/svg/delete.svg';
+import AsideMenu from './AsideMenu';
 
 const blocks = [
   {
@@ -118,6 +119,16 @@ const CreateTest = ({ language }) => {
         editId={editId && editId}
       />}
 
+      {/* Aside menu */}
+      {!openSettings && <AsideMenu
+        questions={questions}
+        setQuestions={setQuestions}
+        setCurrentQuestionStep={setCurrentQuestionStep}
+        currentQuestionStep={currentQuestionStep}
+        language={language}
+        setIsOpen={setIsOpen}
+      />}
+
       {/* padding wrapper */}
       {!openSettings && <div className="padding-wrapper">
         {questions.map((question, id) => {
@@ -196,6 +207,7 @@ const CreateTest = ({ language }) => {
         })}
       </div>}
 
+      {/* Footer */}
       {!openSettings && <Footer
         questions={questions}
         setQuestions={setQuestions}

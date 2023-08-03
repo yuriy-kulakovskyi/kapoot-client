@@ -113,7 +113,7 @@
 }
 
 .nav__link--save {
-  background-color: rgb(2, 130, 130);
+  background: rgb(19, 104, 206);
 }
 
 .nav__link--save.disabled {
