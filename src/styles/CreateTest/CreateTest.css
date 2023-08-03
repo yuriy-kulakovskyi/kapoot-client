@@ -314,12 +314,14 @@
 
 /* Media */
 @media screen and (min-width: 768px) {
-  .answers__blocks {
-    width: 70%;
-  }
-
   .create-test__input {
     width: 50%;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .answers__blocks {
+    width: 70%;
   }
 
   .answer {
