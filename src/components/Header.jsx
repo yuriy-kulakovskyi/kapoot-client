@@ -6,9 +6,6 @@ import '../styles/Header.css';
 // Link component from React Router
 import { Link } from 'react-router-dom';
 
-// onValue
-import { onValue } from "firebase/database";
-
 // functions import
 import { changeLanguage, toggleMenu } from '../actions';
 
@@ -32,6 +29,9 @@ import SettingsIcon from "../assets/svg/settings.svg";
 
 // useNavigate
 import { useNavigate } from 'react-router-dom';
+
+// uid
+import { uid } from "uid";
 
 // navButtons array
 const navButtons = [
@@ -80,7 +80,7 @@ const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTes
   const quizzesRef = useRef();
 
   // generate random id but if it's already in the database generate another one and don't allow code less than 15 digits
-  let id = Math.floor(Math.random() * 1000000000000000);
+  const id = uid(15);
 
   useEffect(() => {
     if (currentUser) {
@@ -97,28 +97,6 @@ const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTes
   // save test to database function
   const save = async () => {
     if (!editId) {
-      // onValue
-      onValue(quizzesRef.current, (snapshot) => {
-        const data = snapshot.val();
-  
-        if (data) {
-          const quizzesData = Object.values(data);
-  
-          // check if code is equal to any id in quizzesData
-          const checkCode = quizzesData.filter(quiz => quiz.value.id === id);
-  
-          // if checkCode is true generate another id
-          if (checkCode) {
-            id = Math.floor(Math.random() * 1000000000000000);
-          }
-  
-          // if id is less than 15 digits generate another id
-          if (id < 100000000000000) {
-            id = Math.floor(Math.random() * 1000000000000000);
-          }
-        }
-      })
-
       // push question to database
       if (quizzesRef.current) {
         try {
