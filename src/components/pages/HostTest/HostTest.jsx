@@ -75,7 +75,7 @@ const HostTest = ({ language, enTitle, uaTitle, plTitle, enDescription, uaDescri
         setNames([]);
       }
     });
-  }, [setNames]);
+  }, [setNames, quizzesRef]);
 
   // generate random code but if it's already in the database generate another one and don't allow code less than 15 digits
   let code = Math.floor(Math.random() * 1000000000000000);

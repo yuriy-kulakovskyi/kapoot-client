@@ -29,6 +29,8 @@ import '../../../styles/CreateTest/CreateTest.css';
 
 // delete icon
 import DeleteIcon from '../../../assets/svg/delete.svg';
+
+// Aside menu component import
 import AsideMenu from './AsideMenu';
 
 const blocks = [

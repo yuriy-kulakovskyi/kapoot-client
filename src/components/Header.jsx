@@ -30,8 +30,8 @@ import SettingsIcon from "../assets/svg/settings.svg";
 // useNavigate
 import { useNavigate } from 'react-router-dom';
 
-// uid
-import { uid } from "uid";
+// uuid
+import { v4 as uuidv4 } from 'uuid';
 
 // navButtons array
 const navButtons = [
@@ -79,8 +79,8 @@ const Header = ({ language, changeLanguage, toggleMenu, isDisplayed, creatingTes
   // quizzesRef
   const quizzesRef = useRef();
 
-  // generate random id but if it's already in the database generate another one and don't allow code less than 15 digits
-  const id = uid(15);
+  // generate id 
+  const id = uuidv4();
 
   useEffect(() => {
     if (currentUser) {

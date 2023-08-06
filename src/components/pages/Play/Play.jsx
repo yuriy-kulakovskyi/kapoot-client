@@ -18,9 +18,6 @@ import Header from "../../Header";
 // onValue
 import { onValue } from "firebase/database";
 
-// push from firebase
-import { push } from "firebase/database";
-
 // Link from react-router-dom
 import { Link } from 'react-router-dom';
 

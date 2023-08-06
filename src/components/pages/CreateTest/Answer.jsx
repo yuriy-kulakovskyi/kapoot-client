@@ -5,7 +5,7 @@ const Answer = ({ index, setQuestions, answers, correctAnswers, questionIndex, f
   const [isChecked, setIsChecked] = useState(correctAnswers.includes(index));
 
   return (
-    <li className={"answer " + "answer--" + figure}>
+    <li className={"answer answer--" + figure}>
       <div className="answer__head">
         <input
           type="checkbox"
