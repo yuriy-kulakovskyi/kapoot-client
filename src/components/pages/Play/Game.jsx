@@ -6,6 +6,9 @@ import { useLocation } from 'react-router-dom';
 // onValue
 import { onValue } from "firebase/database";
 
+// redux connect
+import { connect } from "react-redux";
+
 // useAuth
 import { useAuth } from '../../../contexts/AuthContext';
 
@@ -27,7 +30,10 @@ import { useNavigate } from 'react-router-dom';
 // styles
 import '../../../styles/Play/Game.css';
 
-const Game = () => {
+// Display result component
+import DisplayResult from './DisplayResult';
+
+const Game = ({ language }) => {
   // values from useAuth
   const {
     currentUser
@@ -73,6 +79,15 @@ const Game = () => {
   // score state
   const [score, setScore] = useState(0);
 
+  // isCorrect state
+  const [isCorrect, setIsCorrect] = useState(false);
+
+  // display result state
+  const [displayResult, setDisplayResult] = useState(false);
+
+  // showFinalScore state
+  const [displayFinalScore, setDisplayFinalScore] = useState(false);
+
   useEffect(() => {
     onValue(gamesRef.current, (snapshot) => {
       const data = snapshot.val();
@@ -102,35 +117,64 @@ const Game = () => {
     });
   }, [code]);
 
+  // updateScore function
+  const updateScore = async (score) => {
+    await update(ref(database, `/players/${currentUser.uid}`), {
+      value: {
+        name: name,
+        score: score,
+        game: code
+      }
+    });
+  }
+
   // answerQuestion function
   const answerQuestion = (question, selectedAnswer) => {
     if (currentQuestion <= questions.length) {
+      setDisplayResult(true);
       if(question.correctAnswers.includes(question.answers.indexOf(selectedAnswer))) {
+        setIsCorrect(true);
         setScore(score + 1000);
+        updateScore(score + 1000);
+      } else {
+        setIsCorrect(false);
       }
 
       setCurrentQuestion(currentQuestion + 1);
+
+      if (currentQuestion === questions.length) {
+        setDisplayResult(false);
+        setIsCorrect(false);
+        setDisplayFinalScore(true);
+      }
+
+      setTimeout(() => {
+        setDisplayResult(false);
+        setIsCorrect(false);
+      }, 5000);
     }
   };  
   
-  // when the user has answered all questions and the game is over push update his score to the database
+  // when the user has answered all questions and the game is over update his score to the database
   useEffect(() => {
     if (currentQuestion > questions.length) {
       // update score
-      update(ref(database, `/players/${currentUser.uid}`), {
-        value: {
-          name: name,
-          score: score,
-          game: code
-        }
-      });
+      updateScore(score);
     }
-  }, [currentQuestion, database, name, playersRef, questions.length, score, setScore, code, currentUser]);
+  }, [currentQuestion, updateScore, questions.length, score]);
 
   return (
     <section className='game'>
+      {/* display user result */}
+      {displayResult &&
+        <DisplayResult
+          isCorrect={isCorrect}
+          language={language}
+        />
+      }
+
       {/* display questions count */}
-      {currentQuestion <= questions.length && 
+      {!displayResult &&  currentQuestion <= questions.length && 
         <QuestionsCount
           currentQuestion={currentQuestion}
           questionsLength={questions.length}
@@ -140,7 +184,7 @@ const Game = () => {
       {/* display questions */}
       {
         // show questions according to currentQuestion
-        questions.map((question, key) => {
+        !displayResult && questions.map((question, key) => {
           return (
             currentQuestion === key + 1 &&
             <div key={key} className="question">
@@ -181,9 +225,17 @@ const Game = () => {
         score={score}
         progress={(currentQuestion - 1) / questions.length * 100}
         questionsLength={questions.length}
+        displayFinalScore={displayFinalScore}
       />
     </section>
   );
 }
 
-export default Game;
+// map state to props
+const mapStateToProps = state => {
+  return {
+    language: state.language
+  }
+}
+
+export default connect(mapStateToProps)(Game);
