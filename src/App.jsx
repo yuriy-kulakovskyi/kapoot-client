@@ -33,9 +33,6 @@ import Game from './components/pages/Play/Game';
 // Results component link
 import Results from './components/pages/HostTest/Results';
 
-// UserResults component link
-import UserResults from './components/pages/Play/UserResults';
-
 // Library component link
 import Library from './components/pages/Library/Library';
 
@@ -70,7 +67,6 @@ function App() {
           <Route path="/library" element={<Library />} />
           <Route path="/host" element={<Results />} />
           <Route path="/game" element={<Game />} />
-          <Route path="/results" element={<UserResults />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/edit" element={<Edit />} />
         </Routes>

@@ -6,14 +6,8 @@ import { useLocation } from "react-router-dom";
 // onValue
 import { onValue } from "firebase/database";
 
-// ref from firebase
-import { ref } from "firebase/database";
-
-// remove from firebase
-import { remove } from "firebase/database";
-
-// getDatabase from firebase
-import { getDatabase } from "firebase/database";
+// firebase
+import { ref, getDatabase } from "firebase/database";
 
 // styles
 import '../../../styles/HostTest/Results.css';
@@ -40,42 +34,6 @@ const Results = () => {
 
   // players state
   const [players, setPlayers] = useState([]);
-
-  // delete game from database and all players by code if the user left the page
-  window.onbeforeunload = () => {
-    // onValue
-    onValue(gamesRef.current, (snapshot) => {
-      const data = snapshot.val();
-
-      // if data exists
-      if (data) {
-        // foreach loop through data
-        Object.keys(data).forEach((key) => {
-          // if code matches
-          if (data[key].value.code === code) {
-            // remove from database
-            remove(ref(database, `/games/${key}`));
-          }
-        });
-      }
-    });
-
-    onValue(playersRef.current, (snapshot) => {    
-      const data = snapshot.val();
-
-      // if data exists
-      if (data) {
-        // foreach loop through data
-        Object.keys(data).forEach((key) => {
-          // if code matches
-          if (data[key].value.game === code.toString()) {
-            // remove from database
-            remove(ref(database, `/players/${key}`));
-          }
-        });
-      }
-    });
-  }
 
   // useEffect
   useEffect(() => {
