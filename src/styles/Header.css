@@ -237,7 +237,11 @@
 }
 
 @media screen and (max-width: 500px) {
-  .header .nav__link:not(.nav__link--language, .nav__settings a, .nav__link--settings, .nav__link--save) {
+  .header .nav__link:not(.nav__link--language, .nav__settings a, .nav__link--settings, .nav__link--save, .nav__link--background) {
     display: none;
+  }
+
+  .header .nav__list {
+    gap: 20px;
   }
 }
