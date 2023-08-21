@@ -49,12 +49,8 @@ const Play = ({ language }) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (currentUser) {
-      gamesRef.current = ref(database, "/games");
-      setName(currentUser.displayName);
-
-      playersRef.current = ref(database, "/players");
-    }
+    gamesRef.current = ref(database, "/games");
+    playersRef.current = ref(database, "/players");
 
     onValue(gamesRef.current, (snapshot) => {
       const data = snapshot.val();
@@ -77,6 +73,10 @@ const Play = ({ language }) => {
         });
       }
     });
+
+    if (currentUser) {
+      setName(currentUser.displayName);
+    }
   }, [currentUser, database, gamesRef, code]);
 
   const checkCode = () => {
@@ -101,6 +101,18 @@ const Play = ({ language }) => {
       <h1 className='play__title'>Kapoot!</h1>
 
       <div className="play__box">
+        {/* input for name */}
+        {!currentUser && <input 
+          type="text" 
+          value={name}
+          placeholder = {
+            // according to the language, the placeholder will change
+            language === "en" ? "Name" : language === "ua" ? "Ім'я" : "Imię"
+          }
+          onChange={(e) => setName(e.target.value)}
+        />}
+
+        {/* input for code */}
         <input
           type="text"
           placeholder = {

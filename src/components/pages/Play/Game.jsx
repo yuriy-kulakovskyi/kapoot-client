@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 
 // useLocation from react-router-dom
 import { useLocation } from 'react-router-dom';
@@ -8,9 +8,6 @@ import { onValue } from "firebase/database";
 
 // redux connect
 import { connect } from "react-redux";
-
-// useAuth
-import { useAuth } from '../../../contexts/AuthContext';
 
 // getDatabase, ref, update from firebase
 import { getDatabase, ref, update } from "firebase/database";
@@ -34,11 +31,6 @@ import '../../../styles/Play/Game.css';
 import DisplayResult from './DisplayResult';
 
 const Game = ({ language }) => {
-  // values from useAuth
-  const {
-    currentUser
-  } = useAuth();
-
   // useNavigate
   const navigate = useNavigate();
 
@@ -52,11 +44,9 @@ const Game = ({ language }) => {
   const playersRef = useRef();
 
   useEffect(() => {
-    if (currentUser) {
-      gamesRef.current = ref(database, "/games");
-      playersRef.current = ref(database, "/players");
-    }
-  }, [currentUser, database, gamesRef]);
+    gamesRef.current = ref(database, "/games");
+    playersRef.current = ref(database, "/players");
+  }, [database, gamesRef]);
 
   // useLocation
   const location = useLocation();
@@ -68,7 +58,7 @@ const Game = ({ language }) => {
 
   // useEffect
   useEffect(() => {
-    if (!code && !name) {
+    if (code === "" || name === "") {
       navigate("/");
     }
   }, [code, name, navigate, questions]);
@@ -118,16 +108,16 @@ const Game = ({ language }) => {
   }, [code]);
 
   // updateScore function
-  const updateScore = async (score) => {
-    await update(ref(database, `/players/${currentUser.uid}`), {
+  const updateScore = useCallback(async (score) => {
+    update(ref(database, `/players/${name}`), {
       value: {
         name: name,
         score: score,
         game: code
       }
     });
-  }
-
+  }, [code, name, database]);
+        
   // answerQuestion function
   const answerQuestion = (question, selectedAnswer) => {
     if (currentQuestion <= questions.length) {

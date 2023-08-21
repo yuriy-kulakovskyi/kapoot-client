@@ -9,9 +9,6 @@ import { Link } from 'react-router-dom';
 // Redux connect function import
 import { connect } from "react-redux";
 
-// useAuth
-import { useAuth } from '../../../contexts/AuthContext';
-
 // titles object
 const titles = {
   en: "Welcome to Kapoot!",
@@ -43,8 +40,6 @@ const buttons = {
 };
 
 const Main = ({ language }) => {
-  const { currentUser } = useAuth();
-
   return (
     <main className="main">
       <div className="main__text">
@@ -58,22 +53,10 @@ const Main = ({ language }) => {
           {language === "en" ? descriptions.en : language === "ua" ? descriptions.ua : descriptions.pl}
         </p>
 
-        <div className="row">
-          <Link to={currentUser ? "/create" : "/signup"} className="main__text__link green-link">
-            {/* According to the "language" constant display button's text on this language */}
-            {language === "en" ? buttons.en.create : language === "ua" ? buttons.ua.create : buttons.pl.create}
-          </Link>
-
-          <span className="main__text__span">
-            {/* According to the "language" constant display word "or" on this language */}
-            {language === "en" ? "or" : language === "ua" ? "або" : "albo"}
-          </span>
-
-          <Link to={currentUser ? "/play-kapoot" : "/signup"} className="main__text__link violet-link">
-            {/* According to the "language" constant display button's text on this language */}
-            {language === "en" ? buttons.en.play : language === "ua" ? buttons.ua.play : buttons.pl.play}
-          </Link>
-        </div>
+        <Link to={"/play-kapoot"} className="main__text__link violet-link">
+          {/* According to the "language" constant display button's text on this language */}
+          {language === "en" ? buttons.en.play : language === "ua" ? buttons.ua.play : buttons.pl.play}
+        </Link>
       </div>
     </main>
   );
