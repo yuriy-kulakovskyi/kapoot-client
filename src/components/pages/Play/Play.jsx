@@ -22,16 +22,16 @@ import { onValue } from "firebase/database";
 import { Link } from 'react-router-dom';
 
 const Play = ({ language }) => {
-  // name state
-  const [name, setName] = useState("");
-
-  // code state
-  const [code, setCode] = useState("");
-
   // values from useAuth
   const {
     currentUser
   } = useAuth();
+
+  // name state
+  const [name, setName] = useState(currentUser ? currentUser.displayName : "");
+
+  // code state
+  const [code, setCode] = useState("");
 
   // database
   const database = getDatabase();
@@ -48,7 +48,15 @@ const Play = ({ language }) => {
   // error state
   const [error, setError] = useState("");
 
+  // isRequired state
+  const [isRequired, setIsRequired] = useState(false);
+
+  // isDisabled state
+  const [isDisabled, setIsDisabled] = useState(false);
+
   useEffect(() => {
+    setIsRequired(true);
+
     gamesRef.current = ref(database, "/games");
     playersRef.current = ref(database, "/players");
 
@@ -74,10 +82,59 @@ const Play = ({ language }) => {
       }
     });
 
-    if (currentUser) {
-      setName(currentUser.displayName);
-    }
-  }, [currentUser, database, gamesRef, code]);
+    // check if name is already in the database
+    onValue(playersRef.current, (snapshot) => {
+      const data = snapshot.val();
+
+      if (data) {
+        const playersData = Object.values(data);
+
+        // get names from playersData
+        const playersNames = playersData.map((player) => {
+          return player.value.name;
+        });
+
+        // get games from playersData
+        const playersGames = playersData.map((player) => {
+          return player.value.game;
+        });
+
+        // check if name and game are equal to any name and game
+        playersNames.forEach((playerName, index) => {
+          if (name === playerName.toString() && code === playersGames[index].toString()) {
+            setError(
+              language === "en" ? "Name is already taken" : language === "ua" ? "Ім'я вже зайняте" : "Imię jest już zajęte"
+            );
+            setMatched(false);
+            setIsDisabled(true);
+            setIsRequired(true);
+          } else {
+            setError("");
+            setIsDisabled(false);
+            setMatched(true);
+            setIsRequired(true);
+          }
+        });
+        
+        
+        // playersNames.forEach((playerName) => {
+        //   if (name === playerName.toString()) {
+        //     setError(
+        //       language === "en" ? "Name is already taken" : language === "ua" ? "Ім'я вже зайняте" : "Imię jest już zajęte"
+        //     );
+        //     setMatched(false);
+        //     setIsDisabled(true);
+        //     setIsRequired(true);
+        //   } else {
+        //     setError("");
+        //     setIsDisabled(false);
+        //     setMatched(true);
+        //     setIsRequired(true);
+        //   }
+        // });
+      }
+    });
+  }, [currentUser, database, gamesRef, code, language, name]);
 
   const checkCode = () => {
     !matched &&
@@ -102,10 +159,10 @@ const Play = ({ language }) => {
 
       <div className="play__box">
         {/* input for name */}
-        {!currentUser && <input 
-          type="text" 
+        {isRequired && <input
+          type="text"
           value={name}
-          placeholder = {
+          placeholder={
             // according to the language, the placeholder will change
             language === "en" ? "Name" : language === "ua" ? "Ім'я" : "Imię"
           }
@@ -115,7 +172,7 @@ const Play = ({ language }) => {
         {/* input for code */}
         <input
           type="text"
-          placeholder = {
+          placeholder={
             // according to the language, the placeholder will change
             language === "en" ? "Code" : language === "ua" ? "Код" : "Kod"
           }
@@ -124,7 +181,7 @@ const Play = ({ language }) => {
         />
 
         {/* button which will redirect to the game */}
-        <Link 
+        {!isDisabled && <Link
           to={matched && "/game"}
           onClick={checkCode}
           className='play__button'
@@ -135,7 +192,7 @@ const Play = ({ language }) => {
         >
           {/* according to the chosen language display text */}
           {language === "en" ? "Play" : language === "ua" ? "Грати" : "Grać"}
-        </Link>
+        </Link>}
         <div className="play__error">
           {/* according to the chosen language display text */}
           {error}

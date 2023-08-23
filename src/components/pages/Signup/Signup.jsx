@@ -48,7 +48,7 @@ const Signup = ({ language }) => {
       // signup
       await signup(auth, emailRef.current.value, passwordRef.current.value);
 
-      // update profile
+      // set displayName if available and doesn't exist yet in the database
       await updateprofile(auth.currentUser, { displayName: nicknameRef.current.value });
 
       navigate('/');

@@ -109,7 +109,7 @@ const Game = ({ language }) => {
 
   // updateScore function
   const updateScore = useCallback(async (score) => {
-    update(ref(database, `/players/${name}`), {
+    await update(ref(database, `/players/${name}`), {
       value: {
         name: name,
         score: score,
