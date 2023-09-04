@@ -40,8 +40,8 @@
 }
 
 
-
-.quizzes__quiz:hover .quiz__title {
+.quizzes__quiz:hover .quiz__title,
+.library-test__quiz:hover .quiz__title {
   text-decoration: underline;
 }
 

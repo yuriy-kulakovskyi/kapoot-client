@@ -42,6 +42,12 @@ const LibMain = ({ language }) => {
   // questions state
   const [questions, setQuestions] = useState([]);
 
+  // identifiers state
+  const [identifiers, setIdentifiers] = useState([]);
+
+  // descriptions state
+  const [descriptions, setDescriptions] = useState([]);
+
   // quizName state
   const [quizName, setQuizName] = useState("");
 
@@ -65,14 +71,29 @@ const LibMain = ({ language }) => {
           return quiz.value.questions;
         });
 
+        // get description from gameData
+        const quizDescriptions = quizData.map((game) => {
+          return game.value.description;
+        });
+
+        // get identifiers from quizData
+        const quizIdentifiers = quizData.map((game) => {
+          return game.value.id;
+        });
+
         // push quizQuestions to questions
         setQuestions(quizQuestions);
 
+        // push quizDescriptions to descriptions
+        setDescriptions(quizDescriptions);
+
+        // push quizIdentifiers to identifiers
+        setIdentifiers(quizIdentifiers);
       } else {
         setNames([]);
       }
     });
-  }, [setNames, quizzesRef]);
+  }, []);
 
   // generate random code but if it's already in the database generate another one and don't allow code less than 15 digits
   let code = Math.floor(Math.random() * 1000000000000000);
@@ -123,7 +144,9 @@ const LibMain = ({ language }) => {
             quiz: {
               title: names[index],
               questions: questions[index]
-            }
+            },
+            host: currentUser.uid,
+            status: "in progress"
           }
         }
       );
@@ -158,7 +181,13 @@ const LibMain = ({ language }) => {
                 <img src={coverImage} alt={"Cover img" + index} />
               </div>
               <div className="quiz__info">
-                <h3 className='quiz__title'>{quiz}</h3>
+                <Link 
+                  to={"/edit"}
+                  className='quiz__title'
+                  state={{ id: identifiers[index], title: quiz, description: descriptions[index], questions: questions[index] }}
+                >
+                    {quiz}
+                </Link>
 
                 <Link
                   to={"/host"}

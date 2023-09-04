@@ -115,23 +115,6 @@ const Play = ({ language }) => {
             setIsRequired(true);
           }
         });
-        
-        
-        // playersNames.forEach((playerName) => {
-        //   if (name === playerName.toString()) {
-        //     setError(
-        //       language === "en" ? "Name is already taken" : language === "ua" ? "Ім'я вже зайняте" : "Imię jest już zajęte"
-        //     );
-        //     setMatched(false);
-        //     setIsDisabled(true);
-        //     setIsRequired(true);
-        //   } else {
-        //     setError("");
-        //     setIsDisabled(false);
-        //     setMatched(true);
-        //     setIsRequired(true);
-        //   }
-        // });
       }
     });
   }, [currentUser, database, gamesRef, code, language, name]);

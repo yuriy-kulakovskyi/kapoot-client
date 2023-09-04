@@ -12,7 +12,8 @@
 
 .container__user,
 .container__host,
-.container__quizzes {
+.container__quizzes,
+.container__games {
   width: 100%;
   padding: 10px;
 }

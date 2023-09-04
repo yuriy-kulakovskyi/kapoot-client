@@ -73,7 +73,7 @@ const Quizes = ({ language }) => {
           return quiz.value.title;
         });
 
-        // push quizNames to names
+        // push quizNames first three to names
         setNames(quizNames);
 
         // get questions from quizData
@@ -152,7 +152,9 @@ const Quizes = ({ language }) => {
             quiz: {
               title: names[index],
               questions: questions[index]
-            }
+            },
+            host: currentUser.uid,
+            status: "in progress"
           }
         }
       );
@@ -169,7 +171,7 @@ const Quizes = ({ language }) => {
         {language === "en" ? text.titles[1].en : language === "ua" ? text.titles[1].ua : text.titles[1].pl}
       </h1>
 
-      {/* Display quizzes */}
+      {/* Display first three quizzes */}
       <ul className="quizzes__list">
         {names.length !== 0 ? names.map((quiz, index) => {
           return (
@@ -178,12 +180,12 @@ const Quizes = ({ language }) => {
                 <img src={coverImage} alt={"Cover img" + index} />
               </div>
               <div className="quiz__info">
-                <Link 
+                <Link
                   to={"/edit"}
                   className='quiz__title'
                   state={{ id: identifiers[index], title: quiz, description: descriptions[index], questions: questions[index] }}
                 >
-                    {quiz}
+                  {quiz}
                 </Link>
 
                 <Link

@@ -56,13 +56,6 @@ const Game = ({ language }) => {
   // questions state
   const [questions, setQuestions] = useState([]);
 
-  // useEffect
-  useEffect(() => {
-    if (code === "" || name === "") {
-      navigate("/");
-    }
-  }, [code, name, navigate, questions]);
-
   // currentQuestion state
   const [currentQuestion, setCurrentQuestion] = useState(1);
 
@@ -77,6 +70,13 @@ const Game = ({ language }) => {
 
   // showFinalScore state
   const [displayFinalScore, setDisplayFinalScore] = useState(false);
+
+  // useEffect
+  useEffect(() => {
+    if (code === "" || name === "") {
+      navigate("/");
+    }
+  }, [code, name, navigate]);
 
   useEffect(() => {
     onValue(gamesRef.current, (snapshot) => {
@@ -105,32 +105,51 @@ const Game = ({ language }) => {
         });
       }
     });
-  }, [code]);
+
+    // get player's currentQuestion and score and set it
+    const savedScore = localStorage.getItem('score');
+    const savedCurrentQuestion = localStorage.getItem('currentQuestion');
+
+    if (savedScore && savedCurrentQuestion) {
+      setScore(parseInt(savedScore));
+      setCurrentQuestion(parseInt(savedCurrentQuestion));
+    }
+  }, [code, name]);
+
 
   // updateScore function
-  const updateScore = useCallback(async (score) => {
+  const updatePlayer = useCallback(async (score, currentQuestion) => {
     await update(ref(database, `/players/${name}`), {
       value: {
         name: name,
         score: score,
-        game: code
+        game: code,
+        currentQuestion: currentQuestion
       }
     });
   }, [code, name, database]);
-        
+
   // answerQuestion function
   const answerQuestion = (question, selectedAnswer) => {
     if (currentQuestion <= questions.length) {
       setDisplayResult(true);
-      if(question.correctAnswers.includes(question.answers.indexOf(selectedAnswer))) {
+      if (question.correctAnswers.includes(question.answers.indexOf(selectedAnswer))) {
         setIsCorrect(true);
         setScore(score + 1000);
-        updateScore(score + 1000);
+        setCurrentQuestion(currentQuestion + 1);
+        updatePlayer(score + 1000, currentQuestion + 1);
+
+        // localSorage
+        localStorage.setItem("score", score + 1000);
+        localStorage.setItem("currentQuestion", currentQuestion + 1);
       } else {
         setIsCorrect(false);
-      }
+        setCurrentQuestion(currentQuestion + 1);
+        updatePlayer(score, currentQuestion + 1);
 
-      setCurrentQuestion(currentQuestion + 1);
+        // localSorage
+        localStorage.setItem("currentQuestion", currentQuestion + 1);
+      }
 
       if (currentQuestion === questions.length) {
         setDisplayResult(false);
@@ -143,15 +162,14 @@ const Game = ({ language }) => {
         setIsCorrect(false);
       }, 5000);
     }
-  };  
-  
+  };
+
   // when the user has answered all questions and the game is over update his score to the database
   useEffect(() => {
     if (currentQuestion > questions.length) {
-      // update score
-      updateScore(score);
+      localStorage.clear();
     }
-  }, [currentQuestion, updateScore, questions.length, score]);
+  }, [currentQuestion, updatePlayer, questions.length, score, navigate]);
 
   return (
     <section className='game'>
@@ -164,13 +182,13 @@ const Game = ({ language }) => {
       }
 
       {/* display questions count */}
-      {!displayResult &&  currentQuestion <= questions.length && 
+      {!displayResult && currentQuestion <= questions.length &&
         <QuestionsCount
           currentQuestion={currentQuestion}
           questionsLength={questions.length}
         />
       }
-      
+
       {/* display questions */}
       {
         // show questions according to currentQuestion
@@ -191,10 +209,10 @@ const Game = ({ language }) => {
                         >
                           <span className='answer__figure-wrap'>{
                             // depending on key, display a figure
-                            key === 0 ? <div className='answer__figure triangle'></div> : 
-                            key === 1 ? <div className='answer__figure rhombus'></div> :
-                            key === 2 ? <div className='answer__figure circle'></div> :
-                            <div className='answer__figure square'></div>
+                            key === 0 ? <div className='answer__figure triangle'></div> :
+                              key === 1 ? <div className='answer__figure rhombus'></div> :
+                                key === 2 ? <div className='answer__figure circle'></div> :
+                                  <div className='answer__figure square'></div>
                           }</span>
 
                           <span className='answer__text'>

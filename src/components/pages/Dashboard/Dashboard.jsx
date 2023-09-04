@@ -24,6 +24,9 @@ import Host from './Host';
 // Quizzes component
 import Quizzes from './Quizzes';
 
+// Games component
+import Games from './Games';
+
 // text.json
 import text from './text.json';
 
@@ -81,6 +84,13 @@ const Dashboard = ({ language }) => {
         <div className="container__quizzes">
           {/* Quizes */}
           <Quizzes />
+        </div>
+
+        <div className="container__games">
+          {/* Games */}
+          <Games
+            language={language}
+          />
         </div>
 
         {/* Display the user's data */}
