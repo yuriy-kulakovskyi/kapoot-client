@@ -14,7 +14,7 @@ const Footer = ({ nickname, score, progress, questionsLength, displayFinalScore 
       {/* Score */}
       <div className="game__footer-score">
         <p className="game__footer-score-number">{score}{progress === 100 && displayFinalScore && "/" + questionsLength * 1000}</p>
-        <p className="game__footer-score-number">{progress === 100 && displayFinalScore && ((score / 1000) / questionsLength * 12).toFixed(1)} / 12</p>
+        {progress === 100 && <p className="game__footer-score-number">{displayFinalScore && ((score / 1000) / questionsLength * 12).toFixed(1)} / 12</p>}
       </div>
     </footer>
   );
