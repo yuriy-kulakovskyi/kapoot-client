@@ -227,3 +227,13 @@
     font-size: 15px;
   }
 }
+
+@media screen and (max-width: 500px) {
+  .game .question__answers {
+    grid-template-columns: 1fr;
+  }
+
+  .game__header {
+    display: none;
+  }
+}
