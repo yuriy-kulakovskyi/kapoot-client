@@ -114,9 +114,6 @@ const Game = ({ language }) => {
       setScore(parseInt(savedScore));
       setCurrentQuestion(parseInt(savedCurrentQuestion));
     }
-
-    // if after 5 secs no questions navigate to the home page
-    setTimeout(() => questions.length === 0 && navigate("/"), 5000);
   }, [code, name]);
 
 
