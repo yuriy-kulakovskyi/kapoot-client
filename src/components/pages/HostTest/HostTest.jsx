@@ -182,7 +182,7 @@ const HostTest = ({ language, enTitle, uaTitle, plTitle, enDescription, uaDescri
 
                   <Link
                     to={"/host"}
-                    state={{ title: quiz, code: code }}
+                    state={{ title: quiz, code: code, questions: questions[index] }}
                     className='quiz__host-button'
                     onClick={() => handleClick(quiz)}
                   >

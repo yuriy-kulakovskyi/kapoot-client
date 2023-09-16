@@ -27,7 +27,7 @@ const Results = ({ language }) => {
 
   const location = useLocation();
 
-  const { title, code } = location.state;
+  const { title, code, questions } = location.state;
 
   // database
   const database = getDatabase();
@@ -132,6 +132,7 @@ const Results = ({ language }) => {
                 key={player.value.name}
                 name={player.value.name}
                 score={player.value.score}
+                point={(player.value.score / 1000) / (questions && questions.length) * 12}
               />
             );
           })}
